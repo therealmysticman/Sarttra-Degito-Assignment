@@ -1,0 +1,9 @@
+export { default as HomeIcon } from './HomeIcon';
+export { default as AppIcon } from './AppIcon';
+export { default as SearchIcon } from './SearchIcon';
+export { default as TripsIcon } from './TripsIcon';
+export { default as ProfileIcon } from './ProfileIcon';
+export { default as ArrowIcon } from './ArrowIcon';
+export { default as FlightIcon } from './FlightIcon';
+export { default as CarIcon } from './CarIcon';
+export { default as HotelIcon } from './HotelIcon';

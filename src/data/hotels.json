@@ -1,0 +1,278 @@
+{
+  "hotels": [
+    {
+      "id": 1,
+      "name": "Hotel JW Marriott",
+      "location": "Pattaya, Thailand",
+      "rating": 4.8,
+      "reviews": "10K Reviews",
+      "price": "1000/night",
+      "priceNumeric": 1000,
+      "currency": "USD",
+      "image": "/hotel-1.jpg",
+      "description": "Luxury beachfront resort with world-class amenities and stunning ocean views.",
+      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Beach Access"],
+      "rooms": {
+        "available": 15,
+        "total": 200
+      },
+      "coordinates": {
+        "lat": 12.9236,
+        "lng": 100.8825
+      },
+      "category": "luxury",
+      "featured": true
+    },
+    {
+      "id": 2,
+      "name": "Grand Palace Hotel",
+      "location": "Bangkok, Thailand", 
+      "rating": 4.6,
+      "reviews": "8.5K Reviews",
+      "price": "800/night",
+      "priceNumeric": 800,
+      "currency": "USD",
+      "image": "/hotel-2.jpg",
+      "description": "Historic luxury hotel in the heart of Bangkok with traditional Thai architecture.",
+      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Concierge", "Valet Parking"],
+      "rooms": {
+        "available": 8,
+        "total": 150
+      },
+      "coordinates": {
+        "lat": 13.7563,
+        "lng": 100.5018
+      },
+      "category": "luxury",
+      "featured": true
+    },
+    {
+      "id": 3,
+      "name": "Seaside Resort & Spa",
+      "location": "Phuket, Thailand",
+      "rating": 4.5,
+      "reviews": "6.2K Reviews", 
+      "price": "650/night",
+      "priceNumeric": 650,
+      "currency": "USD",
+      "image": "/hotel-3.jpg",
+      "description": "Tropical paradise resort with private beach and award-winning spa facilities.",
+      "amenities": ["Private Beach", "Spa", "WiFi", "Multiple Restaurants", "Water Sports"],
+      "rooms": {
+        "available": 22,
+        "total": 180
+      },
+      "coordinates": {
+        "lat": 7.8804,
+        "lng": 98.3923
+      },
+      "category": "resort",
+      "featured": false
+    },
+    {
+      "id": 4,
+      "name": "Urban Boutique Hotel",
+      "location": "Chiang Mai, Thailand",
+      "rating": 4.3,
+      "reviews": "3.8K Reviews",
+      "price": "450/night", 
+      "priceNumeric": 450,
+      "currency": "USD",
+      "image": "/hotel-4.jpg",
+      "description": "Modern boutique hotel blending contemporary design with local cultural elements.",
+      "amenities": ["WiFi", "Restaurant", "Rooftop Bar", "Gym", "Business Center"],
+      "rooms": {
+        "available": 12,
+        "total": 80
+      },
+      "coordinates": {
+        "lat": 18.7883,
+        "lng": 98.9853
+      },
+      "category": "boutique",
+      "featured": false
+    },
+    {
+      "id": 5,
+      "name": "Mountain View Lodge",
+      "location": "Pai, Thailand",
+      "rating": 4.1,
+      "reviews": "2.1K Reviews",
+      "price": "280/night",
+      "priceNumeric": 280,
+      "currency": "USD", 
+      "image": "/hotel-5.jpg",
+      "description": "Peaceful mountain retreat offering stunning valley views and nature activities.",
+      "amenities": ["Mountain View", "Restaurant", "Hiking Trails", "WiFi", "Garden"],
+      "rooms": {
+        "available": 18,
+        "total": 45
+      },
+      "coordinates": {
+        "lat": 19.3586,
+        "lng": 98.4386
+      },
+      "category": "nature",
+      "featured": false
+    },
+    {
+      "id": 6,
+      "name": "Riverside Luxury Resort",
+      "location": "Ayutthaya, Thailand",
+      "rating": 4.7,
+      "reviews": "5.5K Reviews",
+      "price": "720/night",
+      "priceNumeric": 720,
+      "currency": "USD",
+      "image": "/hotel-6.jpg", 
+      "description": "Historic riverside resort near ancient temples with traditional Thai hospitality.",
+      "amenities": ["River View", "Spa", "Temple Tours", "Restaurant", "WiFi", "Pool"],
+      "rooms": {
+        "available": 9,
+        "total": 120
+      },
+      "coordinates": {
+        "lat": 14.3692,
+        "lng": 100.5877
+      },
+      "category": "heritage",
+      "featured": true
+    },
+    {
+      "id": 7,
+      "name": "Beachfront Paradise",
+      "location": "Koh Samui, Thailand",
+      "rating": 4.4,
+      "reviews": "7.3K Reviews",
+      "price": "590/night",
+      "priceNumeric": 590,
+      "currency": "USD",
+      "image": "/hotel-7.jpg",
+      "description": "Tropical beachfront resort with crystal clear waters and white sandy beaches.",
+      "amenities": ["Private Beach", "Water Sports", "Spa", "Multiple Pools", "WiFi"],
+      "rooms": {
+        "available": 25,
+        "total": 160
+      },
+      "coordinates": {
+        "lat": 9.5018,
+        "lng": 99.9648
+      },
+      "category": "beach",
+      "featured": false
+    },
+    {
+      "id": 8,
+      "name": "City Center Hotel",
+      "location": "Pattaya, Thailand",
+      "rating": 4.0,
+      "reviews": "4.2K Reviews", 
+      "price": "320/night",
+      "priceNumeric": 320,
+      "currency": "USD",
+      "image": "/hotel-8.jpg",
+      "description": "Modern city hotel with easy access to shopping, dining and entertainment.",
+      "amenities": ["WiFi", "Restaurant", "Gym", "Business Center", "Parking"],
+      "rooms": {
+        "available": 30,
+        "total": 220
+      },
+      "coordinates": {
+        "lat": 12.9236,
+        "lng": 100.8825
+      },
+      "category": "business",
+      "featured": false
+    },
+    {
+      "id": 9,
+      "name": "Jungle Eco Lodge",
+      "location": "Khao Yai, Thailand",
+      "rating": 4.2,
+      "reviews": "1.8K Reviews",
+      "price": "380/night",
+      "priceNumeric": 380,
+      "currency": "USD",
+      "image": "/hotel-9.jpg",
+      "description": "Sustainable eco-lodge in the heart of Thailand's beautiful national park.",
+      "amenities": ["Nature Trails", "Wildlife Tours", "Restaurant", "WiFi", "Organic Garden"],
+      "rooms": {
+        "available": 14,
+        "total": 35
+      },
+      "coordinates": {
+        "lat": 14.4412,
+        "lng": 101.3731
+      },
+      "category": "eco",
+      "featured": false
+    },
+    {
+      "id": 10,
+      "name": "Rooftop Sky Hotel",
+      "location": "Bangkok, Thailand",
+      "rating": 4.6,
+      "reviews": "9.1K Reviews",
+      "price": "680/night",
+      "priceNumeric": 680,
+      "currency": "USD",
+      "image": "/hotel-10.jpg",
+      "description": "Modern high-rise hotel with panoramic city views and rooftop infinity pool.",
+      "amenities": ["Rooftop Pool", "Sky Bar", "Spa", "WiFi", "Restaurant", "Gym"],
+      "rooms": {
+        "available": 11,
+        "total": 300
+      },
+      "coordinates": {
+        "lat": 13.7563,
+        "lng": 100.5018
+      },
+      "category": "modern",
+      "featured": true
+    }
+  ],
+  "filters": {
+    "priceRanges": [
+      {"min": 0, "max": 300, "label": "Under $300"},
+      {"min": 300, "max": 600, "label": "$300 - $600"},
+      {"min": 600, "max": 1000, "label": "$600 - $1000"},
+      {"min": 1000, "max": 999999, "label": "Above $1000"}
+    ],
+    "categories": [
+      {"id": "luxury", "name": "Luxury", "count": 2},
+      {"id": "resort", "name": "Resort", "count": 1},
+      {"id": "boutique", "name": "Boutique", "count": 1},
+      {"id": "nature", "name": "Nature", "count": 1},
+      {"id": "heritage", "name": "Heritage", "count": 1},
+      {"id": "beach", "name": "Beach", "count": 1},
+      {"id": "business", "name": "Business", "count": 1},
+      {"id": "eco", "name": "Eco-Friendly", "count": 1},
+      {"id": "modern", "name": "Modern", "count": 1}
+    ],
+    "amenities": [
+      {"id": "wifi", "name": "WiFi", "count": 10},
+      {"id": "pool", "name": "Pool", "count": 4},
+      {"id": "spa", "name": "Spa", "count": 6},
+      {"id": "restaurant", "name": "Restaurant", "count": 9},
+      {"id": "gym", "name": "Gym", "count": 4},
+      {"id": "beach", "name": "Beach Access", "count": 3},
+      {"id": "parking", "name": "Parking", "count": 2}
+    ],
+    "locations": [
+      {"id": "pattaya", "name": "Pattaya", "count": 2},
+      {"id": "bangkok", "name": "Bangkok", "count": 2},
+      {"id": "phuket", "name": "Phuket", "count": 1},
+      {"id": "chiang-mai", "name": "Chiang Mai", "count": 1},
+      {"id": "pai", "name": "Pai", "count": 1},
+      {"id": "ayutthaya", "name": "Ayutthaya", "count": 1},
+      {"id": "koh-samui", "name": "Koh Samui", "count": 1},
+      {"id": "khao-yai", "name": "Khao Yai", "count": 1}
+    ]
+  },
+  "metadata": {
+    "totalHotels": 10,
+    "lastUpdated": "2024-01-15T10:30:00Z",
+    "version": "1.0.0",
+    "currency": "USD"
+  }
+}
