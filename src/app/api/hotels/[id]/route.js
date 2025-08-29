@@ -3,7 +3,8 @@ import hotelsData from '../../../../data/hotels.json';
 
 export async function GET(request, { params }) {
   try {
-    const hotelId = parseInt(params.id);
+    const { id } = await params;
+    const hotelId = parseInt(id);
     const hotel = hotelsData.hotels.find(h => h.id === hotelId);
     
     if (!hotel) {

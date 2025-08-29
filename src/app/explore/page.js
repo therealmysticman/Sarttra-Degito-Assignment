@@ -46,13 +46,13 @@ const ExplorePage = () => {
         <SearchSection />
 
                 {/* Right Hero Section - Desktop Only */}
-        <div className="hidden md:flex flex-1 relative justify-end rounded-bl-[40px] rounded-tl-[40px] overflow-hidden">
+        <div className="hidden md:flex flex-1 relative justify-end overflow-visible">
           {/* Background Image */}
           <div 
-            className="w-[983px] h-[1080px] bg-cover bg-center relative ml-auto"
+            className="w-[983px] h-[120vh] bg-cover bg-center relative ml-auto rounded-tl-[40px] rounded-bl-[40px]"
                          style={{
                backgroundImage: `linear-gradient(45deg, rgba(45, 61, 223, 0.8), rgba(45, 61, 223, 0.6)), url('/tajmahal.png')`,
-               backgroundSize: '983px 1080px'
+               backgroundSize: '983px 120vh'
              }}
           >
             {/* Arrow Icon */}

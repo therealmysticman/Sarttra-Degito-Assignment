@@ -58,7 +58,7 @@ export default function HotelCard({ hotel, onViewDetails }) {
             className="text-sm"
             style={{ color: '#221F3C', margin: 0 }}
           >
-            {hotel.price}
+            {hotel.currency === 'THB' ? '฿' : ''}{hotel.price}
           </p>
           
           {/* View Details Button */}

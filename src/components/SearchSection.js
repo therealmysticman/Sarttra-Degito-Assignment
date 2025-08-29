@@ -2,19 +2,30 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { FlightIcon, CarIcon, HotelIcon } from '../../assets/icons/index';
+import { useSearch } from '../contexts/SearchContext';
+import { FlightIcon, CarIcon, CarIcon2, HotelIcon, WifiIcon, GymIcon, BathIcon, DrinkIcon, OtherIcon } from '../../assets/icons/index';
 
 const SearchSection = () => {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchData, setSearchData] = useState({
-    location: 'Pattaya',
-    checkIn: 'Thu 28 Jan-2021',
-    checkOut: 'Fri 29 Jan-2021',
-    guests: '2 adult 1 children - 1 room'
-  });
+  const { 
+    searchState, 
+    setLocation, 
+    setCheckIn, 
+    setCheckOut, 
+    setGuests, 
+    setSearchQuery,
+    formatDateForDisplay,
+    getSearchParams 
+  } = useSearch();
+  
   const [recentSearches, setRecentSearches] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // Helper function to get minimum date (today)
+  const getMinDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
 
   useEffect(() => {
     loadRecentSearches();
@@ -44,14 +55,8 @@ const SearchSection = () => {
 
   const handleSearch = () => {
     setLoading(true);
-    // Create search parameters
-    const searchParams = new URLSearchParams({
-      q: searchQuery || searchData.location,
-      location: searchData.location,
-      checkIn: searchData.checkIn,
-      checkOut: searchData.checkOut,
-      guests: searchData.guests
-    });
+    // Use the context's search params
+    const searchParams = getSearchParams();
     
     // Navigate to explore result page with search parameters
     router.push(`/exploreResult?${searchParams.toString()}`);
@@ -59,17 +64,11 @@ const SearchSection = () => {
 
   const handleRecentSearchClick = (hotel) => {
     // Set the location from the recent search and perform search
-    setSearchData(prev => ({ ...prev, location: hotel.location }));
+    setLocation(hotel.location);
     setSearchQuery(hotel.location);
     
     setTimeout(() => {
-      const searchParams = new URLSearchParams({
-        q: hotel.location,
-        location: hotel.location,
-        checkIn: searchData.checkIn,
-        checkOut: searchData.checkOut,
-        guests: searchData.guests
-      });
+      const searchParams = getSearchParams();
       router.push(`/exploreResult?${searchParams.toString()}`);
     }, 100);
   };
@@ -88,7 +87,7 @@ const SearchSection = () => {
         <div className="relative mb-6">
           <input
             type="text"
-            value={searchQuery}
+            value={searchState.searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search city, Country, Place for Travel advisory"
             className="flex-shrink-0 border-none outline-none text-sm rounded-lg"
@@ -145,42 +144,61 @@ const SearchSection = () => {
           </div>
           <input
             type="text"
-            value={searchData.location}
+            value={searchState.location}
+            placeholder="Where are you going?"
             style={{color: '#6E6C7C'}}
-            onChange={(e) => setSearchData({...searchData, location: e.target.value})}
+            onChange={(e) => setLocation(e.target.value)}
             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         {/* Dates */}
         <div className="grid grid-cols-2 gap-2">
-          <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-              </svg>
+          <div className="space-y-1">
+            <label className="block text-xs font-medium text-gray-600 ml-1">Check-in</label>
+            <div className="relative">
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <input
+                type="date"
+                value={searchState.checkIn}
+                min={getMinDate()}
+                onChange={(e) => setCheckIn(e.target.value)}
+                style={{color: '#6E6C7C'}}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              />
             </div>
-            <input
-              type="text"
-              value={searchData.checkIn}
-              style={{color: '#6E6C7C'}}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-              readOnly
-            />
+            <div className="text-xs text-gray-500 ml-1">
+              {searchState.checkIn ? formatDateForDisplay(searchState.checkIn) : 'Select date'}
+            </div>
           </div>
-          <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-              <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-              </svg>
+          <div className="space-y-1">
+            <label className="block text-xs font-medium text-gray-600 ml-1">Check-out</label>
+            <div className="relative">
+              <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <input
+                type="date"
+                value={searchState.checkOut}
+                min={searchState.checkIn ? (() => {
+                  const nextDay = new Date(searchState.checkIn);
+                  nextDay.setDate(nextDay.getDate() + 1);
+                  return nextDay.toISOString().split('T')[0];
+                })() : getMinDate()}
+                onChange={(e) => setCheckOut(e.target.value)}
+                style={{color: '#6E6C7C'}}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              />
             </div>
-            <input
-              type="text"
-              value={searchData.checkOut}
-              style={{color: '#6E6C7C'}}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-              readOnly
-            />
+            <div className="text-xs text-gray-500 ml-1">
+              {searchState.checkOut ? formatDateForDisplay(searchState.checkOut) : 'Select date'}
+            </div>
           </div>
         </div>
 
@@ -191,13 +209,26 @@ const SearchSection = () => {
               <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
             </svg>
           </div>
-          <input
-            type="text"
-            value={searchData.guests}
+          <select
+            value={searchState.guests}
+            onChange={(e) => setGuests(e.target.value)}
             style={{color: '#6E6C7C'}}
-            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            readOnly
-          />
+            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white"
+          >
+            <option value="All Guests">All Guests</option>
+            <option value="1 adult, 0 children - 1 room">1 Adult - 1 Room</option>
+            <option value="2 adult, 0 children - 1 room">2 Adults - 1 Room</option>
+            <option value="2 adult, 1 children - 1 room">2 Adults, 1 Child - 1 Room</option>
+            <option value="2 adult, 2 children - 1 room">2 Adults, 2 Children - 1 Room</option>
+            <option value="3 adult, 0 children - 1 room">3 Adults - 1 Room</option>
+            <option value="4 adult, 0 children - 1 room">4 Adults - 1 Room</option>
+            <option value="2 adult, 0 children - 2 room">2 Adults - 2 Rooms</option>
+          </select>
+          <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
       </div>
 
@@ -206,7 +237,8 @@ const SearchSection = () => {
         <button 
           onClick={handleSearch}
           disabled={loading}
-          className="w-full md:w-64 bg-blue-600 text-white py-3 md:h-[58px] md:py-0 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex-shrink-0 disabled:opacity-50"
+          style={{backgroundColor: '#2D3DDF'}}
+          className="w-full md:w-64 text-white py-3 md:h-[58px] md:py-0 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex-shrink-0 disabled:opacity-50"
         >
           {loading ? 'Searching...' : 'Search'}
         </button>
@@ -214,7 +246,7 @@ const SearchSection = () => {
 
       {/* Recent Searches */}
       <div>
-        <h3 className="text-lg font-semibold mb-4">Recent Searches</h3>
+        <h3 className="text-lg font-semibold mb-4 text-gray-600">Recent Searches</h3>
         <div className="space-y-4">
           {recentSearches.length > 0 ? (
             recentSearches.map((hotel) => (
@@ -242,7 +274,7 @@ const SearchSection = () => {
 
                 {/* Hotel Details */}
                 <div className="flex-1 p-2 sm:p-3">
-                  <div className="font-semibold text-sm sm:text-base truncate">{hotel.name}</div>
+                  <div className="font-semibold text-sm sm:text-base truncate text-gray-600">{hotel.name}</div>
                   <div className="flex items-center gap-1 text-amber-400 text-xs sm:text-sm">
                     {"★★★★★".slice(0, Math.floor(hotel.rating))}
                     <span className="text-gray-400">{"★".repeat(5 - Math.floor(hotel.rating))}</span>
@@ -251,14 +283,31 @@ const SearchSection = () => {
 
                   <div className="mt-1 text-xs text-gray-500 hidden sm:block">Amenities</div>
                   <div className="mt-1 flex gap-1 sm:gap-2">
-                    {["🏠","🏢","📅","👥","•••"].map((icon, index) => (
-                      <span 
-                        key={index} 
-                        className="inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gray-100 shadow-sm text-xs sm:text-sm"
-                      >
-                        {icon}
-                      </span>
-                    ))}
+                    {[
+                      { component: CarIcon2, label: "Car Service" },
+                      { component: BathIcon, label: "Bath" },
+                      { component: DrinkIcon, label: "Restaurant" },
+                      { component: WifiIcon, label: "WiFi" },
+                      { component: GymIcon, label: "Gym" },
+                      { component: OtherIcon, label: "Other" }
+                    ].map((iconData, index) => {
+                      const IconComponent = iconData.component;
+                      return (
+                        <span 
+                          key={index} 
+                          className="inline-flex items-center justify-center w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gray-100 shadow-sm"
+                          title={iconData.label}
+                        >
+                          <IconComponent 
+                            style={{ 
+                              width: '6px', 
+                              height: '6px',
+                              color: '#6B7280'
+                            }} 
+                          />
+                        </span>
+                      );
+                    })}
                   </div>
 
                   <div className="mt-1 sm:mt-2 font-semibold text-indigo-600 text-sm sm:text-base">{hotel.price}</div>
@@ -266,7 +315,8 @@ const SearchSection = () => {
 
                 {/* Vertical Book Now Button */}
                 <button
-                  className="w-10 sm:w-12 bg-indigo-600 text-white flex items-center justify-center rounded-r-xl hover:bg-indigo-700 transition-colors"
+                  className="w-10 sm:w-12 text-white flex items-center justify-center rounded-r-xl hover:bg-indigo-700 transition-colors"
+                  style={{backgroundColor: '#2D3DDF'}}
                   aria-label="Book Now"
                   onClick={(e) => {
                     e.stopPropagation();
