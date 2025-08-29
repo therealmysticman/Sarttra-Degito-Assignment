@@ -17,7 +17,7 @@ export async function GET() {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { location, minPrice, maxPrice, category } = body;
+    const { location, minPrice, maxPrice, category, guests } = body;
     
     let filteredHotels = hotelsData.hotels;
     
@@ -43,6 +43,13 @@ export async function POST(request) {
     if (category) {
       filteredHotels = filteredHotels.filter(hotel =>
         hotel.category === category
+      );
+    }
+    
+    // Filter by guest capacity
+    if (guests) {
+      filteredHotels = filteredHotels.filter(hotel =>
+        hotel.guests && hotel.guests.includes(guests)
       );
     }
     

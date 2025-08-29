@@ -1,14 +1,30 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearch } from '../../contexts/SearchContext';
 import SideNavbar from '../../components/SideNavbar';
+import SearchHeader from '../../components/SearchHeader';
+import RoomCard from '../../components/RoomCard';
+import { CarIcon2, WifiIcon, GymIcon, BathIcon, DrinkIcon, HotelIcon } from '../../../assets/icons/index';
 
 export default function ExploreHotel() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { 
+    searchState, 
+    setLocation, 
+    setCheckIn, 
+    setCheckOut, 
+    setGuests, 
+    setRoomType,
+    formatDateForDisplay,
+    calculateNights 
+  } = useSearch();
+  
   const [hotelData, setHotelData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const hasInitialized = useRef(false);
 
   useEffect(() => {
     const loadHotelDetails = async () => {
@@ -46,6 +62,42 @@ export default function ExploreHotel() {
     loadHotelDetails();
   }, [searchParams]);
 
+  // Sync URL params with search context only once on initial load
+  useEffect(() => {
+    if (hasInitialized.current) return;
+    
+    const urlCheckIn = searchParams.get('checkIn');
+    const urlCheckOut = searchParams.get('checkOut');
+    const urlGuests = searchParams.get('guests');
+    const urlRoomType = searchParams.get('roomType');
+    const urlLocation = searchParams.get('location');
+    
+    // Update context if URL params exist and are different
+    if (urlCheckIn && urlCheckIn !== searchState.checkIn) {
+      setCheckIn(urlCheckIn);
+    }
+    if (urlCheckOut && urlCheckOut !== searchState.checkOut) {
+      setCheckOut(urlCheckOut);
+    }
+    if (urlGuests && urlGuests !== searchState.guests) {
+      setGuests(urlGuests);
+    } else if (!urlGuests && searchState.guests === 'All Guests') {
+      // If no guests in URL and current state is 'All Guests', keep it
+      // This means user selected "All Guests" in search
+    } else if (!urlGuests) {
+      // If no guests in URL, set default
+      setGuests('2 adult, 0 children - 1 room');
+    }
+    if (urlRoomType && urlRoomType !== searchState.roomType) {
+      setRoomType(urlRoomType);
+    }
+    if (urlLocation && urlLocation !== searchState.location) {
+      setLocation(urlLocation);
+    }
+    
+    hasInitialized.current = true;
+  }, [searchParams, setCheckIn, setCheckOut, setGuests, setRoomType, setLocation]);
+
   // Transform API data to match component expectations
   const transformHotelData = (hotel) => {
     return {
@@ -69,6 +121,7 @@ export default function ExploreHotel() {
         staff: Math.min(hotel.rating - 0.1, 5)
       },
       amenities: hotel.amenities || [],
+      guests: hotel.guests || [],
       rooms: [
         {
           type: "Deluxe Room",
@@ -96,9 +149,49 @@ export default function ExploreHotel() {
     router.push('/exploreResult');
   };
 
-  const handleBookNow = () => {
+  const handleBookNow = (room) => {
     const hotelId = searchParams.get('id') || '1';
-    router.push(`/review?id=${hotelId}`);
+    
+    // Use search context values for booking
+    const checkIn = searchState.checkIn;
+    const checkOut = searchState.checkOut;
+    const guestsValue = searchState.guests;
+    const nights = calculateNights(checkIn, checkOut);
+    
+    // Create URL with all parameters
+    const params = new URLSearchParams({
+      id: hotelId,
+      roomType: room.type,
+      checkIn: checkIn,
+      checkOut: checkOut,
+      guests: guestsValue,
+      days: nights.toString()
+    });
+    
+    router.push(`/review?${params.toString()}`);
+  };
+
+
+
+  // Helper function to get minimum date (today)
+  const getMinDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
+  // Helper function to get appropriate icon for amenity
+  const getAmenityIcon = (amenity, index) => {
+    const amenityIcons = [
+      { component: CarIcon2, label: "Car Service" },
+      { component: BathIcon, label: "Bath" },
+      { component: DrinkIcon, label: "Restaurant" },
+      { component: WifiIcon, label: "WiFi" },
+      { component: GymIcon, label: "Gym" }
+    ];
+    
+    // Use modulo to cycle through icons if more amenities than icons
+    const iconData = amenityIcons[index % amenityIcons.length];
+    return iconData;
   };
 
   const renderStars = (rating) => {
@@ -139,101 +232,12 @@ export default function ExploreHotel() {
       <SideNavbar />
       
       <div className="md:ml-[157px] pb-[100px] md:pb-0">
-        {/* Search Bar */}
-        <div className="bg-white p-4 md:p-6 shadow-sm">
-          {/* Mobile Layout */}
-          <div className="md:hidden">
-            {/* Header with back button and title - Mobile Only */}
-            <div className="flex items-center gap-4 mb-4">
-              <button onClick={handleGoBack} className="p-2 hover:bg-gray-100 rounded-full">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M19 12H5M12 19L5 12L12 5" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-              <h2 className="text-lg font-semibold text-gray-800">Hotel details</h2>
-            </div>
-
-            {/* Search Input */}
-            <div className="mb-4">
-              <input
-                type="text"
-                defaultValue="Search city, Country, Place for Travel advisory"
-                className="w-full px-4 py-3 bg-gray-100 rounded-lg border-none outline-none text-gray-600 text-sm"
-              />
-            </div>
-            
-            {/* Search Filters - Mobile Stacked */}
-            <div className="space-y-3">
-              <input
-                type="text"
-                placeholder="Where are you going?"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm"
-              />
-              <input
-                type="text"
-                defaultValue="20 Dec,2020"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm"
-              />
-              <input
-                type="text"
-                defaultValue="21 Dec,2020"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm"
-              />
-              <input
-                type="text"
-                defaultValue="2 adult, 0 children - 1 room"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm"
-              />
-              <button className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-sm">
-                Search
-              </button>
-            </div>
-          </div>
-
-          {/* Desktop Layout */}
-          <div className="hidden md:block">
-            {/* Back button and search input row */}
-            <div className="flex items-center gap-4 mb-4">
-              <button onClick={handleGoBack} className="p-2 hover:bg-gray-100 rounded-full flex-shrink-0">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M19 12H5M12 19L5 12L12 5" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-              <input
-                type="text"
-                defaultValue="Search city, Country, Place for Travel advisory"
-                className="flex-1 px-4 py-3 bg-gray-100 rounded-lg border-none outline-none text-gray-600 text-sm"
-              />
-            </div>
-            
-            {/* Filter inputs row */}
-            <div className="flex gap-3">
-              <input
-                type="text"
-                placeholder="Where are you going?"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-sm"
-              />
-              <input
-                type="text"
-                defaultValue="20 Dec,2020"
-                className="w-36 px-4 py-3 border border-gray-300 rounded-lg text-sm"
-              />
-              <input
-                type="text"
-                defaultValue="21 Dec,2020"
-                className="w-36 px-4 py-3 border border-gray-300 rounded-lg text-sm"
-              />
-              <input
-                type="text"
-                defaultValue="2 adult, 0 children - 1 room"
-                className="w-56 px-4 py-3 border border-gray-300 rounded-lg text-sm"
-              />
-              <button className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-sm">
-                Search
-              </button>
-            </div>
-          </div>
-        </div>
+        <SearchHeader 
+          title="Hotel details"
+          showMobileTitle={false}
+          showSearchInput={true}
+          showFilters={true}
+        />
 
         {/* Main Content */}
         <div className="p-4 md:p-6">
@@ -280,40 +284,132 @@ export default function ExploreHotel() {
                 </div>
               </div>
 
-              {/* Hotel Info */}
+              {/* Hotel Info - Compact Layout */}
               <div className="bg-white rounded-lg p-4 md:p-6 mb-6">
-                <h1 className="text-xl md:text-3xl font-bold text-gray-800 mb-2">{hotelData.name}</h1>
-                <p className="text-gray-600 mb-4">{hotelData.location}</p>
-                
-                {/* Mobile: Compact rating display */}
-                <div className="flex items-center justify-between mb-4 md:justify-start md:gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-blue-600 text-white px-3 py-1 rounded-lg font-bold text-lg">
-                      {hotelData.rating}
-                    </div>
-                    <div>
-                      <div className="font-semibold">{hotelData.ratingText}</div>
-                      <div className="text-sm text-gray-600">{hotelData.reviews}</div>
-                    </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <h1 className="text-xl md:text-2xl font-bold text-gray-800 mb-1">{hotelData.name}</h1>
+                    <p className="text-gray-500 text-sm md:text-base">{hotelData.location}</p>
                   </div>
                   
-                  {/* Mobile: Price on same row */}
-                  <div className="text-right md:hidden">
-                    <div className="text-lg font-bold text-blue-600">
+                  <div className="text-right">
+                    <div style={{ borderColor: '#2D3DDF', color: '#2D3DDF' }} className="border px-3 py-2 rounded-lg text-sm font-medium">
                       Price Starting from {hotelData.price}
                     </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Date Selection Section */}
+              <div className="bg-white rounded-lg p-4 md:p-6 mb-6">
+                <h3 className="text-lg font-bold text-gray-800 mb-4">Select Your Dates</h3>
                 
-                <div className="flex items-center gap-2 text-red-500 mb-4">
-                  <span>🔥</span>
-                  <span className="text-sm">{hotelData.description}</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Check-in Date */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Check-in</label>
+                    <div className="relative">
+                      <input
+                        type="date"
+                        value={searchState.checkIn}
+                        min={getMinDate()}
+                        onChange={(e) => setCheckIn(e.target.value)}
+                        style={{color: 'gray'}}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                      <div className="mt-1 text-xs text-gray-500">
+                        {searchState.checkIn ? formatDateForDisplay(searchState.checkIn) : 'Select date'}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Check-out Date */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Check-out</label>
+                    <div className="relative">
+                      <input
+                        type="date"
+                        value={searchState.checkOut}
+                        min={searchState.checkIn ? (() => {
+                          const nextDay = new Date(searchState.checkIn);
+                          nextDay.setDate(nextDay.getDate() + 1);
+                          return nextDay.toISOString().split('T')[0];
+                        })() : getMinDate()}
+                        onChange={(e) => setCheckOut(e.target.value)}
+                        style={{color: 'gray'}}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                      <div className="mt-1 text-xs text-gray-500">
+                        {searchState.checkOut ? formatDateForDisplay(searchState.checkOut) : 'Select date'}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Guests */}
+                  <div className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">Guests</label>
+                    <div className="relative">
+                      <select
+                        value={searchState.guests === 'All Guests' ? '2 adult, 0 children - 1 room' : searchState.guests}
+                        onChange={(e) => setGuests(e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white"
+                        style={{color: 'gray'}}
+                      >
+                        {hotelData?.guests?.filter(option => option !== 'All Guests').map((guestOption, index) => {
+                          // Format the display text for better readability
+                          const formatGuestOption = (option) => {
+                            return option
+                              .replace(/(\d+) adult/g, (match, num) => `${num} Adult${num > 1 ? 's' : ''}`)
+                              .replace(/(\d+) children/g, (match, num) => `${num} Child${num > 1 ? 'ren' : ''}`)
+                              .replace(/, 0 children/g, '')
+                              .replace(/ - (\d+) room/g, (match, num) => ` - ${num} Room${num > 1 ? 's' : ''}`);
+                          };
+                          
+                          return (
+                            <option key={index} value={guestOption}>
+                              {formatGuestOption(guestOption)}
+                            </option>
+                          );
+                        }) || (
+                          // Fallback options if hotel data not loaded yet
+                          <>
+                            <option value="1 adult, 0 children - 1 room">1 Adult - 1 Room</option>
+                            <option value="2 adult, 0 children - 1 room">2 Adults - 1 Room</option>
+                            <option value="2 adult, 1 children - 1 room">2 Adults, 1 Child - 1 Room</option>
+                            <option value="2 adult, 2 children - 1 room">2 Adults, 2 Children - 1 Room</option>
+                            <option value="3 adult, 0 children - 1 room">3 Adults - 1 Room</option>
+                            <option value="4 adult, 0 children - 1 room">4 Adults - 1 Room</option>
+                            <option value="2 adult, 0 children - 2 room">2 Adults - 2 Rooms</option>
+                          </>
+                        )}
+                      </select>
+                      <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                
-                {/* Desktop: Price display */}
-                <div className="hidden md:block text-right">
-                  <div className="text-2xl font-bold text-blue-600">Price Starting from {hotelData.price}</div>
-                </div>
+
+                {/* Display selected dates summary */}
+                {searchState.checkIn && searchState.checkOut && (
+                  <div style={{ backgroundColor: '#EDF1FF' }} className="mt-4 p-3 rounded-lg">
+                    <div className="flex flex-wrap items-center justify-between text-sm">
+                      <div className="flex items-center gap-4 mb-2 md:mb-0">
+                        <span className="text-gray-600">
+                          <span className="font-medium">{formatDateForDisplay(searchState.checkIn)}</span> to <span className="font-medium">{formatDateForDisplay(searchState.checkOut)}</span>
+                        </span>
+                        <span style={{ backgroundColor: '#2D3DDF' }} className="text-white px-2 py-1 rounded text-xs">
+                          {calculateNights(searchState.checkIn, searchState.checkOut)} night{calculateNights(searchState.checkIn, searchState.checkOut) > 1 ? 's' : ''}
+                        </span>
+                      </div>
+                      <span className="text-gray-600 text-xs">
+                        {searchState.guests === 'All Guests' ? '2 Adults - 1 Room' : searchState.guests}
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Mobile: Ratings Section */}
@@ -324,19 +420,23 @@ export default function ExploreHotel() {
                 <div className="space-y-3 mb-6">
                   {Object.entries(hotelData.ratings).map(([category, rating]) => (
                     <div key={category} className="flex justify-between items-center">
-                      <span className="capitalize">{category}</span>
+                      <span className="capitalize text-gray-600">{category}</span>
                       <div className="flex">{renderStars(rating)}</div>
                     </div>
                   ))}
                 </div>
 
-                <h3 className="font-bold mb-4">Services</h3>
+                <h3 className="font-bold mb-4 text-gray-600">Services</h3>
                 <div className="flex gap-3 mb-6">
-                  {hotelData.amenities.slice(0, 5).map((amenity, index) => (
-                    <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                      <span className="text-blue-600">🏨</span>
-                    </div>
-                  ))}
+                  {hotelData.amenities.slice(0, 5).map((amenity, index) => {
+                    const iconData = getAmenityIcon(amenity, index);
+                    const IconComponent = iconData.component;
+                    return (
+                      <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center" title={iconData.label}>
+                        <IconComponent className="w-5 h-5 text-blue-600" />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -344,49 +444,15 @@ export default function ExploreHotel() {
               <div className="bg-white rounded-lg p-4 md:p-6">
                 <h2 className="text-xl font-bold mb-4">Room Options</h2>
                 
-                {/* Mobile: Stacked layout */}
-                <div className="space-y-4 md:hidden">
+                {/* Room Cards in horizontal row layout */}
+                <div className="flex flex-col md:flex-row gap-4">
                   {hotelData.rooms.map((room, index) => (
-                    <div key={index} className="border rounded-lg overflow-hidden">
-                      <img
-                        src={room.image}
-                        alt={room.type}
-                        className="w-full h-32 object-cover"
-                      />
-                      <div className="p-4">
-                        <h3 className="font-semibold mb-2">{room.type}</h3>
-                        <div className="text-blue-600 font-bold mb-3">{room.price}</div>
-                        <button 
-                          onClick={handleBookNow}
-                          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-                        >
-                          Book Now
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                {/* Desktop: Side by side layout */}
-                <div className="hidden md:flex md:gap-4">
-                  {hotelData.rooms.map((room, index) => (
-                    <div key={index} className="flex-1 border rounded-lg overflow-hidden">
-                      <img
-                        src={room.image}
-                        alt={room.type}
-                        className="w-full h-32 object-cover"
-                      />
-                      <div className="p-4">
-                        <h3 className="font-semibold mb-2">{room.type}</h3>
-                        <div className="text-blue-600 font-bold mb-3">{room.price}</div>
-                        <button 
-                          onClick={handleBookNow}
-                          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
-                        >
-                          Book Now
-                        </button>
-                      </div>
-                    </div>
+                    <RoomCard 
+                      key={index} 
+                      room={room} 
+                      onBookNow={handleBookNow}
+                      className="flex-1"
+                    />
                   ))}
                 </div>
               </div>
@@ -395,25 +461,29 @@ export default function ExploreHotel() {
             {/* Right Sidebar - Desktop Only */}
             <div className="hidden md:block w-80">
               <div className="bg-white rounded-lg p-6">
-                <h3 className="font-bold mb-4">Ratings</h3>
+                <h3 className="font-bold mb-4 text-gray-600">Ratings</h3>
                 
                 {/* Individual Ratings */}
                 <div className="space-y-3 mb-6">
                   {Object.entries(hotelData.ratings).map(([category, rating]) => (
                     <div key={category} className="flex justify-between items-center">
-                      <span className="capitalize">{category}</span>
+                      <span className="capitalize text-gray-600">{category}</span>
                       <div className="flex">{renderStars(rating)}</div>
                     </div>
                   ))}
                 </div>
 
-                <h3 className="font-bold mb-4">Services</h3>
+                <h3 className="font-bold mb-4 text-gray-600">Services</h3>
                 <div className="flex gap-3 mb-6">
-                  {hotelData.amenities.map((amenity, index) => (
-                    <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                      <span className="text-blue-600">🏨</span>
-                    </div>
-                  ))}
+                  {hotelData.amenities.map((amenity, index) => {
+                    const iconData = getAmenityIcon(amenity, index);
+                    const IconComponent = iconData.component;
+                    return (
+                      <div key={index} className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center" title={iconData.label}>
+                        <IconComponent className="w-5 h-5 text-blue-600" />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>

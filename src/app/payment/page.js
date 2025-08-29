@@ -1,13 +1,24 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import SideNavbar from '../../components/SideNavbar';
+import SearchHeader from '../../components/SearchHeader';
 
 export default function PaymentPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const hotelId = searchParams.get('id');
-  
+
+  // Get cost calculation data from URL parameters
+  const subtotal = parseFloat(searchParams.get('subtotal') || '0');
+  const vatAmount = parseFloat(searchParams.get('vatAmount') || '0');
+  const total = parseFloat(searchParams.get('total') || '0');
+  const currency = searchParams.get('currency') || 'BAHT';
+  const roomType = searchParams.get('roomType') || '';
+  const days = parseInt(searchParams.get('days') || '1');
+  const guests = searchParams.get('guests') || '';
+
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('debit-card');
   const [hotelData, setHotelData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -43,32 +54,27 @@ export default function PaymentPage() {
     {
       id: 'debit-card',
       name: 'Debit Card',
-      icon: '💳',
-      color: '#4F46E5'
+      icon: '/debit-card.png',
     },
     {
       id: 'upi',
       name: 'UPI',
-      icon: '📱',
-      color: '#059669'
+      icon: '/upi.png',
     },
     {
       id: 'phonepe',
       name: 'PhonePay',
-      icon: '📞',
-      color: '#7C3AED'
+      icon: '/phonepe.png',
     },
     {
       id: 'net-banking',
       name: 'Net Banking',
-      icon: '🏦',
-      color: '#F59E0B'
+      icon: '/net-banking.png',
     },
     {
       id: 'credit-card',
       name: 'Credit Card',
-      icon: '💳',
-      color: '#1F2937'
+      icon: '/credit-card.png',
     }
   ];
 
@@ -86,47 +92,52 @@ export default function PaymentPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <SideNavbar />
-      
+
       <div className="md:ml-[157px] pb-[100px] md:pb-0">
-        {/* Header */}
-        <div className="bg-white p-4 shadow-sm">
-          <div className="flex items-center gap-4">
-            <button onClick={handleGoBack} className="p-2 hover:bg-gray-100 rounded-full">
-              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <h1 className="text-lg font-semibold text-gray-800">Payments</h1>
-          </div>
-        </div>
+        <SearchHeader
+          showSearchInput={false}
+          title={
+            <>
+              {/* Desktop = เว้นว่าง */}
+              <span className="hidden md:inline"> </span>
+              {/* Mobile = แสดง Payments */}
+              <span className="inline md:hidden">Payments</span>
+            </>
+          }
+        />
 
         {/* Main Content */}
         <div className="p-4 md:p-6">
           <div className="flex flex-col lg:flex-row gap-8">
-            {/* Left Content - Payment Methods */}
-            <div className="flex-1">
+            {/* Mobile: Price Summary First, Desktop: Payment Methods First */}
+            <div className="order-2 lg:order-1 flex-1">
               <div className="bg-white rounded-lg p-6">
                 <h2 className="text-xl font-bold text-gray-800 mb-6">Payment Details</h2>
-                
+
                 {/* Payment Methods */}
                 <div className="space-y-4">
                   {paymentMethods.map((method) => (
                     <div
                       key={method.id}
                       onClick={() => handlePaymentMethodSelect(method.id)}
-                      className={`p-4 border rounded-lg cursor-pointer transition-all hover:shadow-md ${
-                        selectedPaymentMethod === method.id
+                      className={`p-4 border rounded-lg cursor-pointer transition-all hover:shadow-md ${selectedPaymentMethod === method.id
                           ? 'border-blue-500 bg-blue-50'
                           : 'border-gray-200 hover:border-gray-300'
-                      }`}
+                        }`}
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div 
-                            className="w-10 h-10 rounded-lg flex items-center justify-center text-white text-lg"
+                          <div
+                            className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden"
                             style={{ backgroundColor: method.color }}
                           >
-                            {method.icon}
+                            <Image
+                              src={method.icon}
+                              alt={method.name}
+                              width={32}
+                              height={32}
+                              className="object-contain"
+                            />
                           </div>
                           <span className="font-medium text-gray-800">{method.name}</span>
                         </div>
@@ -136,7 +147,7 @@ export default function PaymentPage() {
                           </svg>
                         )}
                       </div>
-                      
+
                       {/* UPI Special Layout */}
                       {method.id === 'upi' && selectedPaymentMethod === 'upi' && (
                         <div className="mt-4 p-3 bg-gray-50 rounded-lg">
@@ -153,39 +164,40 @@ export default function PaymentPage() {
                 </div>
 
                 {/* Continue Button */}
-                <button 
-                  onClick={() => router.push('/success')}
-                  className="w-full mt-8 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-medium transition-colors"
+                <button
+                  onClick={() => router.push('/paymentsuccess')}
+                  className="w-full mt-8 text-white py-3 rounded-lg hover:bg-blue-700 font-medium transition-colors"
+                  style={{ backgroundColor: '#2D3DDF' }}
                 >
                   Continue to Payment
                 </button>
               </div>
             </div>
 
-            {/* Right Sidebar - Price Summary */}
-            <div className="w-full lg:w-80">
-              <div className="bg-white rounded-lg p-6 sticky top-4">
+            {/* Mobile: Payment Methods Second, Desktop: Price Summary Second */}
+            <div className="order-1 lg:order-2 w-full lg:w-80">
+              <div className="bg-white rounded-lg p-6 lg:sticky lg:top-4">
                 <div className="space-y-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Base fare</span>
-                    <span className="text-gray-800">1,000.00</span>
+                    <span className="text-gray-800">{subtotal.toLocaleString()} {currency}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Total discount</span>
-                    <span className="text-gray-800">0.00</span>
+                    <span className="text-gray-800">0.00 {currency}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Price after discount</span>
-                    <span className="text-gray-800">1,000.00</span>
+                    <span className="text-gray-800">{subtotal.toLocaleString()} {currency}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Taxes & service fees</span>
-                    <span className="text-gray-800">140.00</span>
+                    <span className="text-gray-800">{vatAmount.toLocaleString()} {currency}</span>
                   </div>
                   <div className="border-t pt-4">
                     <div className="flex justify-between font-bold text-lg">
                       <span className="text-blue-600">Total Amount</span>
-                      <span className="text-blue-600">1,140.00</span>
+                      <span className="text-blue-600">{total.toLocaleString()} {currency}</span>
                     </div>
                   </div>
                 </div>

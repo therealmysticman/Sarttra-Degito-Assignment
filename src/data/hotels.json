@@ -11,7 +11,24 @@
       "currency": "BAHT",
       "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Luxury beachfront resort with world-class amenities and stunning ocean views.",
-      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Beach Access"],
+      "amenities": [
+        "Pool",
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Beach Access"
+      ],
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ],
       "rooms": {
         "available": 15,
         "total": 200
@@ -26,7 +43,7 @@
     {
       "id": 2,
       "name": "Grand Palace Hotel",
-      "location": "Bangkok, Thailand", 
+      "location": "Bangkok, Thailand",
       "rating": 4.6,
       "reviews": "8.5K Reviews",
       "price": "800/night",
@@ -34,7 +51,24 @@
       "currency": "BAHT",
       "image": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80",
       "description": "Historic luxury hotel in the heart of Bangkok with traditional Thai architecture.",
-      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Concierge", "Valet Parking"],
+      "amenities": [
+        "Pool",
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Concierge",
+        "Valet Parking"
+      ],
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ],
       "rooms": {
         "available": 8,
         "total": 150
@@ -51,13 +85,29 @@
       "name": "Seaside Resort & Spa",
       "location": "Phuket, Thailand",
       "rating": 4.5,
-      "reviews": "6.2K Reviews", 
+      "reviews": "6.2K Reviews",
       "price": "650/night",
       "priceNumeric": 650,
       "currency": "BAHT",
       "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80",
       "description": "Tropical paradise resort with private beach and award-winning spa facilities.",
-      "amenities": ["Private Beach", "Spa", "WiFi", "Multiple Restaurants", "Water Sports"],
+      "amenities": [
+        "Private Beach",
+        "Spa",
+        "WiFi",
+        "Multiple Restaurants",
+        "Water Sports"
+      ],
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ],
       "rooms": {
         "available": 22,
         "total": 180
@@ -75,12 +125,24 @@
       "location": "Chiang Mai, Thailand",
       "rating": 4.3,
       "reviews": "3.8K Reviews",
-      "price": "450/night", 
+      "price": "450/night",
       "priceNumeric": 450,
       "currency": "BAHT",
       "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Modern boutique hotel blending contemporary design with local cultural elements.",
-      "amenities": ["WiFi", "Restaurant", "Rooftop Bar", "Gym", "Business Center"],
+      "amenities": [
+        "WiFi",
+        "Restaurant",
+        "Rooftop Bar",
+        "Gym",
+        "Business Center"
+      ],
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "3 adult, 0 children - 1 room"
+      ],
       "rooms": {
         "available": 12,
         "total": 80
@@ -100,10 +162,16 @@
       "reviews": "2.1K Reviews",
       "price": "280/night",
       "priceNumeric": 280,
-      "currency": "BAHT", 
+      "currency": "BAHT",
       "image": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Peaceful mountain retreat offering stunning valley views and nature activities.",
-      "amenities": ["Mountain View", "Restaurant", "Hiking Trails", "WiFi", "Garden"],
+      "amenities": [
+        "Mountain View",
+        "Restaurant",
+        "Hiking Trails",
+        "WiFi",
+        "Garden"
+      ],
       "rooms": {
         "available": 18,
         "total": 45
@@ -113,7 +181,12 @@
         "lng": 98.4386
       },
       "category": "nature",
-      "featured": false
+      "featured": false,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room"
+      ]
     },
     {
       "id": 6,
@@ -124,9 +197,16 @@
       "price": "720/night",
       "priceNumeric": 720,
       "currency": "BAHT",
-      "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80", 
+      "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Historic riverside resort near ancient temples with traditional Thai hospitality.",
-      "amenities": ["River View", "Spa", "Temple Tours", "Restaurant", "WiFi", "Pool"],
+      "amenities": [
+        "River View",
+        "Spa",
+        "Temple Tours",
+        "Restaurant",
+        "WiFi",
+        "Pool"
+      ],
       "rooms": {
         "available": 9,
         "total": 120
@@ -136,7 +216,13 @@
         "lng": 100.5877
       },
       "category": "heritage",
-      "featured": true
+      "featured": true,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "3 adult, 0 children - 1 room"
+      ]
     },
     {
       "id": 7,
@@ -149,7 +235,13 @@
       "currency": "BAHT",
       "image": "https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1464&q=80",
       "description": "Tropical beachfront resort with crystal clear waters and white sandy beaches.",
-      "amenities": ["Private Beach", "Water Sports", "Spa", "Multiple Pools", "WiFi"],
+      "amenities": [
+        "Private Beach",
+        "Water Sports",
+        "Spa",
+        "Multiple Pools",
+        "WiFi"
+      ],
       "rooms": {
         "available": 25,
         "total": 160
@@ -159,20 +251,34 @@
         "lng": 99.9648
       },
       "category": "beach",
-      "featured": false
+      "featured": false,
+      "guests": [
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "4 adult, 2 children - 2 room",
+        "2 adult, 0 children - 2 room"
+      ]
     },
     {
       "id": 8,
       "name": "City Center Hotel",
       "location": "Pattaya, Thailand",
-      "rating": 4.0,
-      "reviews": "4.2K Reviews", 
+      "rating": 4,
+      "reviews": "4.2K Reviews",
       "price": "320/night",
       "priceNumeric": 320,
       "currency": "BAHT",
       "image": "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Modern city hotel with easy access to shopping, dining and entertainment.",
-      "amenities": ["WiFi", "Restaurant", "Gym", "Business Center", "Parking"],
+      "amenities": [
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Business Center",
+        "Parking"
+      ],
       "rooms": {
         "available": 30,
         "total": 220
@@ -182,7 +288,13 @@
         "lng": 100.8825
       },
       "category": "business",
-      "featured": false
+      "featured": false,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room"
+      ]
     },
     {
       "id": 9,
@@ -195,7 +307,13 @@
       "currency": "BAHT",
       "image": "https://images.unsplash.com/photo-1587061949409-02df41d5e562?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Sustainable eco-lodge in the heart of Thailand's beautiful national park.",
-      "amenities": ["Nature Trails", "Wildlife Tours", "Restaurant", "WiFi", "Organic Garden"],
+      "amenities": [
+        "Nature Trails",
+        "Wildlife Tours",
+        "Restaurant",
+        "WiFi",
+        "Organic Garden"
+      ],
       "rooms": {
         "available": 14,
         "total": 35
@@ -205,7 +323,12 @@
         "lng": 101.3731
       },
       "category": "eco",
-      "featured": false
+      "featured": false,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room"
+      ]
     },
     {
       "id": 10,
@@ -218,7 +341,14 @@
       "currency": "BAHT",
       "image": "https://images.unsplash.com/photo-1561501900-3701fa6a0864?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Modern high-rise hotel with panoramic city views and rooftop infinity pool.",
-      "amenities": ["Rooftop Pool", "Sky Bar", "Spa", "WiFi", "Restaurant", "Gym"],
+      "amenities": [
+        "Rooftop Pool",
+        "Sky Bar",
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym"
+      ],
       "rooms": {
         "available": 11,
         "total": 300
@@ -228,7 +358,13 @@
         "lng": 100.5018
       },
       "category": "modern",
-      "featured": true
+      "featured": true,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room"
+      ]
     },
     {
       "id": 11,
@@ -236,12 +372,19 @@
       "location": "Singapore, Singapore",
       "rating": 4.9,
       "reviews": "15K Reviews",
-      "price": "350/night",
-      "priceNumeric": 350,
-      "currency": "USD",
+      "price": "12,250/night",
+      "priceNumeric": 12250,
+      "currency": "THB",
       "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       "description": "Iconic luxury hotel with infinity pool, world-class dining, and stunning city views.",
-      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Shopping", "Casino"],
+      "amenities": [
+        "Pool",
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Shopping",
+        "Casino"
+      ],
       "rooms": {
         "available": 8,
         "total": 2500
@@ -251,7 +394,17 @@
         "lng": 103.8607
       },
       "category": "luxury",
-      "featured": true
+      "featured": true,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ]
     },
     {
       "id": 12,
@@ -259,12 +412,19 @@
       "location": "Tokyo, Japan",
       "rating": 4.8,
       "reviews": "8.5K Reviews",
-      "price": "400/night",
-      "priceNumeric": 400,
-      "currency": "USD",
+      "price": "14,000/night",
+      "priceNumeric": 14000,
+      "currency": "THB",
       "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       "description": "Elegant hotel in Shinjuku with panoramic city views and sophisticated Japanese hospitality.",
-      "amenities": ["Spa", "WiFi", "Restaurant", "Gym", "Bar", "Concierge"],
+      "amenities": [
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Bar",
+        "Concierge"
+      ],
       "rooms": {
         "available": 12,
         "total": 178
@@ -274,7 +434,17 @@
         "lng": 139.6503
       },
       "category": "luxury",
-      "featured": true
+      "featured": true,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ]
     },
     {
       "id": 13,
@@ -282,22 +452,39 @@
       "location": "Kuala Lumpur, Malaysia",
       "rating": 4.7,
       "reviews": "6.2K Reviews",
-      "price": "180/night",
-      "priceNumeric": 180,
-      "currency": "USD",
+      "price": "6,300/night",
+      "priceNumeric": 6300,
+      "currency": "THB",
       "image": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       "description": "Urban sanctuary with stunning Petronas Towers views and luxurious spa facilities.",
-      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Bar"],
+      "amenities": [
+        "Pool",
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Bar"
+      ],
       "rooms": {
         "available": 20,
         "total": 55
       },
       "coordinates": {
-        "lat": 3.1390,
+        "lat": 3.139,
         "lng": 101.6869
       },
       "category": "luxury",
-      "featured": false
+      "featured": false,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ]
     },
     {
       "id": 14,
@@ -305,22 +492,39 @@
       "location": "Mumbai, India",
       "rating": 4.6,
       "reviews": "9.1K Reviews",
-      "price": "220/night",
-      "priceNumeric": 220,
-      "currency": "USD",
+      "price": "7,700/night",
+      "priceNumeric": 7700,
+      "currency": "THB",
       "image": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       "description": "Contemporary luxury hotel overlooking the Arabian Sea with exceptional dining.",
-      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Business Center"],
+      "amenities": [
+        "Pool",
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Business Center"
+      ],
       "rooms": {
         "available": 18,
         "total": 287
       },
       "coordinates": {
-        "lat": 19.0760,
+        "lat": 19.076,
         "lng": 72.8777
       },
       "category": "luxury",
-      "featured": false
+      "featured": false,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ]
     },
     {
       "id": 15,
@@ -328,22 +532,39 @@
       "location": "Seoul, South Korea",
       "rating": 4.8,
       "reviews": "7.3K Reviews",
-      "price": "320/night",
-      "priceNumeric": 320,
-      "currency": "USD",
+      "price": "11,200/night",
+      "priceNumeric": 11200,
+      "currency": "THB",
       "image": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1469&q=80",
       "description": "Modern luxury in Gangnam district with traditional Korean elements and city views.",
-      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Bar"],
+      "amenities": [
+        "Pool",
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Bar"
+      ],
       "rooms": {
         "available": 14,
         "total": 317
       },
       "coordinates": {
         "lat": 37.5665,
-        "lng": 126.9780
+        "lng": 126.978
       },
       "category": "luxury",
-      "featured": true
+      "featured": true,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ]
     },
     {
       "id": 16,
@@ -351,12 +572,19 @@
       "location": "Perth, Australia",
       "rating": 4.5,
       "reviews": "4.8K Reviews",
-      "price": "280/night",
-      "priceNumeric": 280,
-      "currency": "USD",
+      "price": "9,800/night",
+      "priceNumeric": 9800,
+      "currency": "THB",
       "image": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       "description": "Stylish hotel in a heritage building in the heart of Perth's CBD.",
-      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Bar"],
+      "amenities": [
+        "Pool",
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Bar"
+      ],
       "rooms": {
         "available": 22,
         "total": 48
@@ -366,7 +594,13 @@
         "lng": 115.8605
       },
       "category": "boutique",
-      "featured": false
+      "featured": false,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "3 adult, 0 children - 1 room"
+      ]
     },
     {
       "id": 17,
@@ -374,12 +608,19 @@
       "location": "Paris, France",
       "rating": 4.9,
       "reviews": "12.4K Reviews",
-      "price": "650/night",
-      "priceNumeric": 650,
-      "currency": "USD",
-      "image": "https://images.unsplash.com/photo-1502602898536-47ad22581b52?ixlib=rb-4.0.3&auto=format&fit=crop&w=1473&q=80",
+      "price": "22,750/night",
+      "priceNumeric": 22750,
+      "currency": "THB",
+      "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Palace hotel with Eiffel Tower views, Michelin-starred dining, and French elegance.",
-      "amenities": ["Spa", "WiFi", "Restaurant", "Gym", "Bar", "Concierge"],
+      "amenities": [
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Bar",
+        "Concierge"
+      ],
       "rooms": {
         "available": 6,
         "total": 101
@@ -389,7 +630,17 @@
         "lng": 2.3522
       },
       "category": "luxury",
-      "featured": true
+      "featured": true,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ]
     },
     {
       "id": 18,
@@ -397,12 +648,19 @@
       "location": "London, United Kingdom",
       "rating": 4.7,
       "reviews": "18.9K Reviews",
-      "price": "450/night",
-      "priceNumeric": 450,
-      "currency": "USD",
+      "price": "15,750/night",
+      "priceNumeric": 15750,
+      "currency": "THB",
       "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       "description": "Legendary luxury hotel on the Strand with timeless British hospitality.",
-      "amenities": ["Spa", "WiFi", "Restaurant", "Gym", "Bar", "Theater"],
+      "amenities": [
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Bar",
+        "Theater"
+      ],
       "rooms": {
         "available": 10,
         "total": 267
@@ -412,7 +670,13 @@
         "lng": -0.1278
       },
       "category": "heritage",
-      "featured": false
+      "featured": false,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "3 adult, 0 children - 1 room"
+      ]
     },
     {
       "id": 19,
@@ -420,12 +684,19 @@
       "location": "New York, USA",
       "rating": 4.6,
       "reviews": "22.1K Reviews",
-      "price": "500/night",
-      "priceNumeric": 500,
-      "currency": "USD",
+      "price": "17,500/night",
+      "priceNumeric": 17500,
+      "currency": "THB",
       "image": "https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80",
       "description": "Iconic luxury hotel overlooking Central Park with timeless New York glamour.",
-      "amenities": ["Spa", "WiFi", "Restaurant", "Gym", "Shopping", "Concierge"],
+      "amenities": [
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Shopping",
+        "Concierge"
+      ],
       "rooms": {
         "available": 8,
         "total": 282
@@ -435,7 +706,17 @@
         "lng": -73.9741
       },
       "category": "luxury",
-      "featured": true
+      "featured": true,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ]
     },
     {
       "id": 20,
@@ -443,12 +724,19 @@
       "location": "Banff, Canada",
       "rating": 4.4,
       "reviews": "11.7K Reviews",
-      "price": "300/night",
-      "priceNumeric": 300,
-      "currency": "USD",
+      "price": "10,500/night",
+      "priceNumeric": 10500,
+      "currency": "THB",
       "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
       "description": "Castle in the Rockies with breathtaking mountain views and outdoor adventures.",
-      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Golf"],
+      "amenities": [
+        "Pool",
+        "Spa",
+        "WiFi",
+        "Restaurant",
+        "Gym",
+        "Golf"
+      ],
       "rooms": {
         "available": 25,
         "total": 764
@@ -458,61 +746,223 @@
         "lng": -115.5708
       },
       "category": "resort",
-      "featured": false
+      "featured": false,
+      "guests": [
+        "1 adult, 0 children - 1 room",
+        "2 adult, 0 children - 1 room",
+        "2 adult, 1 children - 1 room",
+        "2 adult, 2 children - 1 room",
+        "3 adult, 0 children - 1 room",
+        "4 adult, 0 children - 1 room",
+        "2 adult, 0 children - 2 room",
+        "4 adult, 2 children - 2 room"
+      ]
     }
   ],
   "filters": {
     "priceRanges": [
-      {"min": 0, "max": 300, "label": "Under $300"},
-      {"min": 300, "max": 600, "label": "$300 - $600"},
-      {"min": 600, "max": 1000, "label": "$600 - $1000"},
-      {"min": 1000, "max": 999999, "label": "Above $1000"}
+      {
+        "min": 0,
+        "max": 10500,
+        "label": "Under ฿10,500"
+      },
+      {
+        "min": 10500,
+        "max": 21000,
+        "label": "฿10,500 - ฿21,000"
+      },
+      {
+        "min": 21000,
+        "max": 35000,
+        "label": "฿21,000 - ฿35,000"
+      },
+      {
+        "min": 35000,
+        "max": 999999,
+        "label": "Above ฿35,000"
+      }
     ],
     "categories": [
-      {"id": "luxury", "name": "Luxury", "count": 2},
-      {"id": "resort", "name": "Resort", "count": 1},
-      {"id": "boutique", "name": "Boutique", "count": 1},
-      {"id": "nature", "name": "Nature", "count": 1},
-      {"id": "heritage", "name": "Heritage", "count": 1},
-      {"id": "beach", "name": "Beach", "count": 1},
-      {"id": "business", "name": "Business", "count": 1},
-      {"id": "eco", "name": "Eco-Friendly", "count": 1},
-      {"id": "modern", "name": "Modern", "count": 1}
+      {
+        "id": "luxury",
+        "name": "Luxury",
+        "count": 2
+      },
+      {
+        "id": "resort",
+        "name": "Resort",
+        "count": 1
+      },
+      {
+        "id": "boutique",
+        "name": "Boutique",
+        "count": 1
+      },
+      {
+        "id": "nature",
+        "name": "Nature",
+        "count": 1
+      },
+      {
+        "id": "heritage",
+        "name": "Heritage",
+        "count": 1
+      },
+      {
+        "id": "beach",
+        "name": "Beach",
+        "count": 1
+      },
+      {
+        "id": "business",
+        "name": "Business",
+        "count": 1
+      },
+      {
+        "id": "eco",
+        "name": "Eco-Friendly",
+        "count": 1
+      },
+      {
+        "id": "modern",
+        "name": "Modern",
+        "count": 1
+      }
     ],
     "amenities": [
-      {"id": "wifi", "name": "WiFi", "count": 10},
-      {"id": "pool", "name": "Pool", "count": 4},
-      {"id": "spa", "name": "Spa", "count": 6},
-      {"id": "restaurant", "name": "Restaurant", "count": 9},
-      {"id": "gym", "name": "Gym", "count": 4},
-      {"id": "beach", "name": "Beach Access", "count": 3},
-      {"id": "parking", "name": "Parking", "count": 2}
+      {
+        "id": "wifi",
+        "name": "WiFi",
+        "count": 10
+      },
+      {
+        "id": "pool",
+        "name": "Pool",
+        "count": 4
+      },
+      {
+        "id": "spa",
+        "name": "Spa",
+        "count": 6
+      },
+      {
+        "id": "restaurant",
+        "name": "Restaurant",
+        "count": 9
+      },
+      {
+        "id": "gym",
+        "name": "Gym",
+        "count": 4
+      },
+      {
+        "id": "beach",
+        "name": "Beach Access",
+        "count": 3
+      },
+      {
+        "id": "parking",
+        "name": "Parking",
+        "count": 2
+      }
     ],
     "locations": [
-      {"id": "pattaya", "name": "Pattaya", "count": 2},
-      {"id": "bangkok", "name": "Bangkok", "count": 2},
-      {"id": "phuket", "name": "Phuket", "count": 1},
-      {"id": "chiang-mai", "name": "Chiang Mai", "count": 1},
-      {"id": "pai", "name": "Pai", "count": 1},
-      {"id": "ayutthaya", "name": "Ayutthaya", "count": 1},
-      {"id": "koh-samui", "name": "Koh Samui", "count": 1},
-      {"id": "khao-yai", "name": "Khao Yai", "count": 1},
-      {"id": "singapore", "name": "Singapore", "count": 1},
-      {"id": "tokyo", "name": "Tokyo", "count": 1},
-      {"id": "kuala-lumpur", "name": "Kuala Lumpur", "count": 1},
-      {"id": "mumbai", "name": "Mumbai", "count": 1},
-      {"id": "seoul", "name": "Seoul", "count": 1},
-      {"id": "perth", "name": "Perth", "count": 1},
-      {"id": "paris", "name": "Paris", "count": 1},
-      {"id": "london", "name": "London", "count": 1},
-      {"id": "new-york", "name": "New York", "count": 1},
-      {"id": "banff", "name": "Banff", "count": 1}
+      {
+        "id": "pattaya",
+        "name": "Pattaya",
+        "count": 2
+      },
+      {
+        "id": "bangkok",
+        "name": "Bangkok",
+        "count": 2
+      },
+      {
+        "id": "phuket",
+        "name": "Phuket",
+        "count": 1
+      },
+      {
+        "id": "chiang-mai",
+        "name": "Chiang Mai",
+        "count": 1
+      },
+      {
+        "id": "pai",
+        "name": "Pai",
+        "count": 1
+      },
+      {
+        "id": "ayutthaya",
+        "name": "Ayutthaya",
+        "count": 1
+      },
+      {
+        "id": "koh-samui",
+        "name": "Koh Samui",
+        "count": 1
+      },
+      {
+        "id": "khao-yai",
+        "name": "Khao Yai",
+        "count": 1
+      },
+      {
+        "id": "singapore",
+        "name": "Singapore",
+        "count": 1
+      },
+      {
+        "id": "tokyo",
+        "name": "Tokyo",
+        "count": 1
+      },
+      {
+        "id": "kuala-lumpur",
+        "name": "Kuala Lumpur",
+        "count": 1
+      },
+      {
+        "id": "mumbai",
+        "name": "Mumbai",
+        "count": 1
+      },
+      {
+        "id": "seoul",
+        "name": "Seoul",
+        "count": 1
+      },
+      {
+        "id": "perth",
+        "name": "Perth",
+        "count": 1
+      },
+      {
+        "id": "paris",
+        "name": "Paris",
+        "count": 1
+      },
+      {
+        "id": "london",
+        "name": "London",
+        "count": 1
+      },
+      {
+        "id": "new-york",
+        "name": "New York",
+        "count": 1
+      },
+      {
+        "id": "banff",
+        "name": "Banff",
+        "count": 1
+      }
     ]
   },
   "metadata": {
     "totalHotels": 20,
     "lastUpdated": "2024-01-15T10:30:00Z",
     "version": "2.0.0",
-    "currency": "USD"
+    "currency": "THB"
   }
 }

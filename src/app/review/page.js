@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import SideNavbar from '../../components/SideNavbar';
+import SearchHeader from '../../components/SearchHeader';
 
 export default function ReviewHotel() {
   const router = useRouter();
@@ -17,6 +18,52 @@ export default function ReviewHotel() {
     specialRequest: ''
   });
   const [loading, setLoading] = useState(true);
+  const [validationErrors, setValidationErrors] = useState({});
+  const [costCalculation, setCostCalculation] = useState(null);
+  
+  // Get booking parameters from URL
+  const bookingDetails = {
+    roomType: searchParams.get('roomType') || 'Standard Room',
+    checkIn: searchParams.get('checkIn') || '2024-01-20',
+    checkOut: searchParams.get('checkOut') || '2024-01-21',
+    guests: searchParams.get('guests') || '2 adult, 0 children - 1 room',
+    days: parseInt(searchParams.get('days')) || 1
+  };
+
+  // Cost calculation function
+  const calculateCost = (roomType, days, basePrice = 1000) => {
+    // Room type pricing (base price per night)
+    const roomPricing = {
+      'Standard Room': basePrice,
+      'Deluxe Room': basePrice * 1.3,
+      'Superior Room': basePrice * 1.5,
+      'Suite Room': basePrice * 2.0,
+      'Presidential Suite': basePrice * 3.0
+    };
+
+    const roomPricePerNight = roomPricing[roomType] || basePrice;
+    const subtotal = roomPricePerNight * days;
+    const discount = 0; // No discount as specified
+    const discountAmount = subtotal * (discount / 100);
+    const afterDiscount = subtotal - discountAmount;
+    const vatRate = 7; // VAT 7%
+    const vatAmount = afterDiscount * (vatRate / 100);
+    const total = afterDiscount + vatAmount;
+
+    return {
+      roomType: roomType,
+      days: days,
+      pricePerNight: roomPricePerNight,
+      subtotal: subtotal,
+      discount: discount,
+      discountAmount: discountAmount,
+      afterDiscount: afterDiscount,
+      vatRate: vatRate,
+      vatAmount: vatAmount,
+      total: total,
+      currency: 'BAHT'
+    };
+  };
 
   useEffect(() => {
     const loadHotelDetails = async () => {
@@ -28,6 +75,13 @@ export default function ReviewHotel() {
         
         if (hotel) {
           setHotelData(hotel);
+          
+          // Calculate cost based on hotel base price
+          const basePrice = hotel.priceNumeric || 1000;
+          const cost = calculateCost(bookingDetails.roomType, bookingDetails.days, basePrice);
+          setCostCalculation(cost);
+          
+          console.log('Cost Calculation JSON:', JSON.stringify(cost, null, 2));
         }
       } catch (error) {
         console.error('Error loading hotel details:', error);
@@ -37,7 +91,7 @@ export default function ReviewHotel() {
     };
 
     loadHotelDetails();
-  }, [hotelId]);
+  }, [hotelId, bookingDetails.roomType, bookingDetails.days]);
 
   const handleGoBack = () => {
     router.back();
@@ -48,12 +102,92 @@ export default function ReviewHotel() {
       ...prev,
       [field]: value
     }));
+    
+    // Clear validation error when user starts typing
+    if (validationErrors[field]) {
+      setValidationErrors(prev => ({
+        ...prev,
+        [field]: ''
+      }));
+    }
   };
 
-  const handleContinue = () => {
-    console.log('Booking details:', { hotelData, guestDetails });
-    // Navigate to payment page with hotel ID
-    router.push(`/payment?id=${hotelId}`);
+  const validateGuestDetails = () => {
+    const errors = {};
+    
+    if (!guestDetails.firstName.trim()) {
+      errors.firstName = 'First name is required';
+    }
+    
+    if (!guestDetails.lastName.trim()) {
+      errors.lastName = 'Last name is required';
+    }
+    
+    if (!guestDetails.email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(guestDetails.email)) {
+      errors.email = 'Please enter a valid email';
+    }
+    
+    if (!guestDetails.mobile.trim()) {
+      errors.mobile = 'Mobile number is required';
+    }
+    
+    return errors;
+  };
+
+  const handleContinue = async () => {
+    // Validate guest details
+    const errors = validateGuestDetails();
+    setValidationErrors(errors);
+    
+    if (Object.keys(errors).length > 0) {
+      alert('Please fill in all required fields correctly');
+      return;
+    }
+
+    try {
+      // Send booking data to API
+      const bookingData = {
+        hotelId: hotelId,
+        roomType: bookingDetails.roomType,
+        days: bookingDetails.days,
+        checkIn: bookingDetails.checkIn,
+        checkOut: bookingDetails.checkOut,
+        guests: bookingDetails.guests,
+        guestDetails: guestDetails,
+        costCalculation: costCalculation
+      };
+
+      console.log('Sending booking data to API:', bookingData);
+      console.log('Cost Calculation JSON for API:', JSON.stringify(costCalculation, null, 2));
+      
+      // Here you would make the API call
+      // const response = await fetch('/api/booking', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(bookingData)
+      // });
+
+      // Navigate to payment page with all parameters including cost calculation
+      const params = new URLSearchParams({
+        id: hotelId,
+        roomType: bookingDetails.roomType,
+        days: bookingDetails.days.toString(),
+        checkIn: bookingDetails.checkIn,
+        checkOut: bookingDetails.checkOut,
+        guests: bookingDetails.guests,
+        subtotal: costCalculation.subtotal.toString(),
+        vatAmount: costCalculation.vatAmount.toString(),
+        total: costCalculation.total.toString(),
+        currency: costCalculation.currency
+      });
+      
+      router.push(`/payment?${params.toString()}`);
+    } catch (error) {
+      console.error('Error processing booking:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
   const renderStars = (rating) => {
@@ -82,61 +216,12 @@ export default function ReviewHotel() {
       <SideNavbar />
       
       <div className="md:ml-[157px] pb-[100px] md:pb-0">
-        {/* Mobile Header */}
-        <div className="bg-white p-4 shadow-sm md:hidden">
-          <div className="flex items-center gap-4">
-            <button onClick={handleGoBack} className="p-2 hover:bg-gray-100 rounded-full">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19 12H5M12 19L5 12L12 5" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            <h1 className="text-lg font-semibold text-gray-800">Review hotel</h1>
-          </div>
-        </div>
-
-        {/* Search Bar */}
-        <div className="bg-white p-4 md:p-6 shadow-sm">
-          {/* Desktop: Back arrow + Search input */}
-          <div className="hidden md:flex items-center gap-4 mb-4">
-            <button onClick={handleGoBack} className="p-2 hover:bg-gray-100 rounded-full">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19 12H5M12 19L5 12L12 5" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-            <input
-              type="text"
-              defaultValue="Search city, Country, Place for Travel advisory"
-              className="flex-1 px-4 py-3 bg-gray-100 rounded-lg border-none outline-none text-gray-600 text-sm"
-            />
-          </div>
-          
-          {/* Search Filters */}
-          <div className="flex gap-3 flex-wrap">
-            <input
-              type="text"
-              placeholder="Where are you going?"
-              className="flex-1 min-w-48 px-4 py-3 border border-gray-300 rounded-lg text-sm"
-            />
-            <input
-              type="text"
-              defaultValue="20 Dec,2020"
-              className="w-32 px-4 py-3 border border-gray-300 rounded-lg text-sm"
-            />
-            <input
-              type="text"
-              defaultValue="21 Dec,2020"
-              className="w-32 px-4 py-3 border border-gray-300 rounded-lg text-sm"
-            />
-            <input
-              type="text"
-              defaultValue="2 adult, 0 children - 1 room"
-              className="flex-1 min-w-48 px-4 py-3 border border-gray-300 rounded-lg text-sm"
-            />
-            <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-sm">
-              Search
-            </button>
-          </div>
-        </div>
+        <SearchHeader 
+          title="Review hotel"
+          showMobileTitle={true}
+          showSearchInput={true}
+          showFilters={true}
+        />
 
         {/* Main Content */}
         <div className="p-4 md:p-6">
@@ -160,7 +245,7 @@ export default function ReviewHotel() {
                   {/* Hotel Details */}
                   <div className="flex-1">
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-bold text-lg">{hotelData.name}</h3>
+                      <h3 className="font-bold text-lg text-gray-800">{hotelData.name}</h3>
                       <div className="flex">{renderStars(hotelData.rating)}</div>
                     </div>
                     <p className="text-gray-600 text-sm mb-2">{hotelData.location}</p>
@@ -168,29 +253,59 @@ export default function ReviewHotel() {
                   </div>
                 </div>
 
-                {/* Booking Details */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Check-in</div>
-                    <div className="font-semibold">Sunday 21, Dec</div>
-                    <div className="text-sm text-gray-600">10am</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm inline-block">
-                      1 night
+                {/* Booking Details - Responsive Layout */}
+                <div className="hidden lg:flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-8">
+                    <div>
+                      <div className="text-sm text-gray-600 mb-1">Check-in</div>
+                      <div className="font-semibold text-gray-800">{new Date(bookingDetails.checkIn).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' })}</div>
+                      <div className="text-sm text-gray-600">10am</div>
+                    </div>
+                    <div>
+                      <div style={{ backgroundColor: '#EDF1FF' }} className="text-blue-600 px-3 py-1 rounded-full text-sm font-medium inline-block">
+                        {bookingDetails.days} night{bookingDetails.days > 1 ? 's' : ''}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-600 mb-1">Check-out</div>
+                      <div className="font-semibold text-gray-800">{new Date(bookingDetails.checkOut).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' })}</div>
+                      <div className="text-sm text-gray-600">10am</div>
                     </div>
                   </div>
-                  <div className="text-right md:text-left">
-                    <div className="text-sm text-gray-600 mb-1">Check-out</div>
-                    <div className="font-semibold">Monday 22,Dec</div>
-                    <div className="text-sm text-gray-600">10am</div>
+                  <div className="text-right">
+                    <div className="font-semibold text-gray-800">{bookingDetails.guests}</div>
                   </div>
                 </div>
 
-                <div className="border-t pt-4">
-                  <div className="font-semibold">2 Adult - 1 room</div>
+                {/* Mobile 2x2 Grid Layout */}
+                <div className="lg:hidden grid grid-cols-2 gap-4 mb-6">
+                  <div>
+                    <div className="text-sm text-gray-600 mb-1">Check-in</div>
+                    <div className="font-semibold text-gray-800">{new Date(bookingDetails.checkIn).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' })}</div>
+                    <div className="text-sm text-gray-600">10am</div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-600 mb-1">Check-out</div>
+                    <div className="font-semibold text-gray-800">{new Date(bookingDetails.checkOut).toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' })}</div>
+                    <div className="text-sm text-gray-600">10am</div>
+                  </div>
+                  <div>
+                    <div>
+                      <div style={{ backgroundColor: '#EDF1FF' }} className="text-blue-600 px-3 py-1 rounded-full text-sm font-medium inline-block">
+                        {bookingDetails.days} night{bookingDetails.days > 1 ? 's' : ''}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm text-gray-600 mb-1">Guests</div>
+                    <div className="font-semibold text-gray-800">{bookingDetails.guests}</div>
+                  </div>
                 </div>
+
+
               </div>
+
+
 
               {/* Desktop Guest Details */}
               <div className="hidden lg:block bg-white rounded-lg p-6">
@@ -198,47 +313,59 @@ export default function ReviewHotel() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
                     <input
                       type="text"
                       value={guestDetails.firstName}
                       onChange={(e) => handleInputChange('firstName', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 ${validationErrors.firstName ? 'border-red-500' : 'border-gray-300'}`}
                       placeholder="Enter first name"
                     />
+                    {validationErrors.firstName && (
+                      <p className="text-red-500 text-sm mt-1">{validationErrors.firstName}</p>
+                    )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
                     <input
                       type="text"
                       value={guestDetails.lastName}
                       onChange={(e) => handleInputChange('lastName', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 ${validationErrors.lastName ? 'border-red-500' : 'border-gray-300'}`}
                       placeholder="Enter last name"
                     />
+                    {validationErrors.lastName && (
+                      <p className="text-red-500 text-sm mt-1">{validationErrors.lastName}</p>
+                    )}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">E-mail address</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">E-mail address *</label>
                     <input
                       type="email"
                       value={guestDetails.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 ${validationErrors.email ? 'border-red-500' : 'border-gray-300'}`}
                       placeholder="Enter email address"
                     />
+                    {validationErrors.email && (
+                      <p className="text-red-500 text-sm mt-1">{validationErrors.email}</p>
+                    )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Mobile number</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Mobile number *</label>
                     <input
                       type="tel"
                       value={guestDetails.mobile}
                       onChange={(e) => handleInputChange('mobile', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 ${validationErrors.mobile ? 'border-red-500' : 'border-gray-300'}`}
                       placeholder="Enter mobile number"
                     />
+                    {validationErrors.mobile && (
+                      <p className="text-red-500 text-sm mt-1">{validationErrors.mobile}</p>
+                    )}
                   </div>
                 </div>
 
@@ -251,14 +378,15 @@ export default function ReviewHotel() {
                   <textarea
                     value={guestDetails.specialRequest}
                     onChange={(e) => handleInputChange('specialRequest', e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-24 resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-24 resize-none placeholder-gray-400"
                     placeholder="Any special requests..."
                   />
                 </div>
 
                 <button
                   onClick={handleContinue}
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 font-medium"
+                  className="w-full text-white py-3 rounded-lg hover:bg-blue-700 font-medium"
+                  style={{ backgroundColor: '#2D3DDF' }}
                 >
                   Continue
                 </button>
@@ -268,33 +396,52 @@ export default function ReviewHotel() {
             {/* Right Sidebar - Booking Summary */}
             <div className="w-full lg:w-80">
               <div className="bg-white rounded-lg p-6 sticky top-4">
-                <div className="space-y-4">
-                  <div className="flex justify-between text-sm">
-                    <span>1 room X 1 night</span>
-                    <span>1,000.00</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Total discount</span>
-                    <span>0.00</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Price after discount</span>
-                    <span>1,000.00</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Taxes & service fees</span>
-                    <span>140.00</span>
-                  </div>
-                  <div className="border-t pt-4">
-                    <div className="flex justify-between font-bold text-lg">
-                      <span>Total Amount</span>
-                      <span>1,140.00</span>
+                <h3 className="text-lg font-bold text-gray-800 mb-4">Booking Summary</h3>
+                
+                {costCalculation ? (
+                  <div className="space-y-4">
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Room Type</span>
+                      <span className="font-medium">{costCalculation.roomType}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Price per night</span>
+                      <span>{costCalculation.pricePerNight.toLocaleString()} {costCalculation.currency}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>1 room X {costCalculation.days} night{costCalculation.days > 1 ? 's' : ''}</span>
+                      <span>{costCalculation.subtotal.toLocaleString()} {costCalculation.currency}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Total discount ({costCalculation.discount}%)</span>
+                      <span>-{costCalculation.discountAmount.toLocaleString()} {costCalculation.currency}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Price after discount</span>
+                      <span>{costCalculation.afterDiscount.toLocaleString()} {costCalculation.currency}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>VAT ({costCalculation.vatRate}%)</span>
+                      <span>{costCalculation.vatAmount.toLocaleString()} {costCalculation.currency}</span>
+                    </div>
+                    <div className="border-t pt-4">
+                      <div className="flex justify-between font-bold text-lg text-gray-800">
+                        <span>Total Amount</span>
+                        <span className="text-blue-600">{costCalculation.total.toLocaleString()} {costCalculation.currency}</span>
+                      </div>
+                    </div>
+                    <div className="border-t pt-4">
+                      <div className="font-semibold text-sm text-gray-600">{bookingDetails.guests}</div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <p>Calculating cost...</p>
+                  </div>
+                )}
 
                 <div className="mt-6 pt-6 border-t">
-                  <h4 className="font-semibold mb-2">Cancellation Charges</h4>
+                  <h4 className="font-semibold mb-2 text-gray-400">Cancellation Charges</h4>
                   <p className="text-sm text-gray-600 mb-2">Non Refundable</p>
                   <p className="text-xs text-gray-500">
                     Penalty may be charged by the airline & by MMT based on how close to departure date you cancel.
@@ -306,53 +453,67 @@ export default function ReviewHotel() {
             </div>
           </div>
 
+          
+
           {/* Mobile Guest Details - Below Price Summary */}
           <div className="lg:hidden bg-white rounded-lg p-6 mt-6">
             <h3 className="text-lg font-bold text-gray-800 mb-4">Guest Details</h3>
             
             <div className="space-y-4 mb-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
                 <input
                   type="text"
                   value={guestDetails.firstName}
                   onChange={(e) => handleInputChange('firstName', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 ${validationErrors.firstName ? 'border-red-500' : 'border-gray-300'}`}
                   placeholder="Enter first name"
                 />
+                {validationErrors.firstName && (
+                  <p className="text-red-500 text-sm mt-1">{validationErrors.firstName}</p>
+                )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Last Name *</label>
                 <input
                   type="text"
                   value={guestDetails.lastName}
                   onChange={(e) => handleInputChange('lastName', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 ${validationErrors.lastName ? 'border-red-500' : 'border-gray-300'}`}
                   placeholder="Enter last name"
                 />
+                {validationErrors.lastName && (
+                  <p className="text-red-500 text-sm mt-1">{validationErrors.lastName}</p>
+                )}
               </div>
             </div>
 
             <div className="space-y-4 mb-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">E-mail address</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">E-mail address *</label>
                 <input
                   type="email"
                   value={guestDetails.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 ${validationErrors.email ? 'border-red-500' : 'border-gray-300'}`}
                   placeholder="Enter email address"
                 />
+                {validationErrors.email && (
+                  <p className="text-red-500 text-sm mt-1">{validationErrors.email}</p>
+                )}
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Mobile number</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Mobile number *</label>
                 <input
                   type="tel"
                   value={guestDetails.mobile}
                   onChange={(e) => handleInputChange('mobile', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 ${validationErrors.mobile ? 'border-red-500' : 'border-gray-300'}`}
                   placeholder="Enter mobile number"
                 />
+                {validationErrors.mobile && (
+                  <p className="text-red-500 text-sm mt-1">{validationErrors.mobile}</p>
+                )}
               </div>
             </div>
 
@@ -365,7 +526,7 @@ export default function ReviewHotel() {
               <textarea
                 value={guestDetails.specialRequest}
                 onChange={(e) => handleInputChange('specialRequest', e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-24 resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 h-24 resize-none placeholder-gray-400"
                 placeholder="Any special requests..."
               />
             </div>
