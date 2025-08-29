@@ -1,34 +1,85 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { FlightIcon, CarIcon, HotelIcon } from '../../assets/icons/index';
 
 const SearchSection = () => {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
   const [searchData, setSearchData] = useState({
     location: 'Pattaya',
     checkIn: 'Thu 28 Jan-2021',
     checkOut: 'Fri 29 Jan-2021',
     guests: '2 adult 1 children - 1 room'
   });
+  const [recentSearches, setRecentSearches] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const recentSearches = [
-    {
-      id: 1,
-      name: 'Hotel JW Marriott',
-      rating: 4.8,
-      reviews: '10K Reviews',
-      price: '1000/night',
-      image: '/hotel-1.jpg'
-    },
-    {
-      id: 2,
-      name: 'Hotel JW Marriott',
-      rating: 4.8,
-      reviews: '10K Reviews',
-      price: '1000/night',
-      image: '/hotel-2.jpg'
+  useEffect(() => {
+    loadRecentSearches();
+  }, []);
+
+  const loadRecentSearches = async () => {
+    try {
+      const hotelsData = await import('../data/hotels.json');
+      // Get first 3 featured hotels as recent searches
+      const recentHotels = hotelsData.hotels
+        .filter(hotel => hotel.featured)
+        .slice(0, 3)
+        .map(hotel => ({
+          id: hotel.id,
+          name: hotel.name,
+          rating: hotel.rating,
+          reviews: hotel.reviews,
+          price: `${hotel.currency === 'USD' ? '$' : ''}${hotel.priceNumeric}/night`,
+          image: hotel.image,
+          location: hotel.location
+        }));
+      setRecentSearches(recentHotels);
+    } catch (error) {
+      console.error('Error loading recent searches:', error);
     }
-  ];
+  };
+
+  const handleSearch = () => {
+    setLoading(true);
+    // Create search parameters
+    const searchParams = new URLSearchParams({
+      q: searchQuery || searchData.location,
+      location: searchData.location,
+      checkIn: searchData.checkIn,
+      checkOut: searchData.checkOut,
+      guests: searchData.guests
+    });
+    
+    // Navigate to explore result page with search parameters
+    router.push(`/exploreResult?${searchParams.toString()}`);
+  };
+
+  const handleRecentSearchClick = (hotel) => {
+    // Set the location from the recent search and perform search
+    setSearchData(prev => ({ ...prev, location: hotel.location }));
+    setSearchQuery(hotel.location);
+    
+    setTimeout(() => {
+      const searchParams = new URLSearchParams({
+        q: hotel.location,
+        location: hotel.location,
+        checkIn: searchData.checkIn,
+        checkOut: searchData.checkOut,
+        guests: searchData.guests
+      });
+      router.push(`/exploreResult?${searchParams.toString()}`);
+    }, 100);
+  };
+
+  const handleBookNowClick = (hotel) => {
+    // Navigate directly to the hotel details page
+    router.push(`/exploreHotel?id=${hotel.id}`);
+  };
+
+
 
   return (
     <div className="w-full md:w-[800px] bg-gray-50 p-8">
@@ -37,6 +88,8 @@ const SearchSection = () => {
         <div className="relative mb-6">
           <input
             type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search city, Country, Place for Travel advisory"
             className="flex-shrink-0 border-none outline-none text-sm rounded-lg"
             style={{
@@ -46,6 +99,11 @@ const SearchSection = () => {
               backgroundColor: '#EBEDFF',
               paddingLeft: '16px',
               paddingRight: '48px'
+            }}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                handleSearch();
+              }
             }}
           />
         </div>
@@ -88,6 +146,7 @@ const SearchSection = () => {
           <input
             type="text"
             value={searchData.location}
+            style={{color: '#6E6C7C'}}
             onChange={(e) => setSearchData({...searchData, location: e.target.value})}
             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -104,6 +163,7 @@ const SearchSection = () => {
             <input
               type="text"
               value={searchData.checkIn}
+              style={{color: '#6E6C7C'}}
               className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               readOnly
             />
@@ -117,6 +177,7 @@ const SearchSection = () => {
             <input
               type="text"
               value={searchData.checkOut}
+              style={{color: '#6E6C7C'}}
               className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
               readOnly
             />
@@ -133,6 +194,7 @@ const SearchSection = () => {
           <input
             type="text"
             value={searchData.guests}
+            style={{color: '#6E6C7C'}}
             className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             readOnly
           />
@@ -141,8 +203,12 @@ const SearchSection = () => {
 
       {/* Search Button */}
       <div className="flex justify-center mb-8">
-        <button className="w-full md:w-64 bg-blue-600 text-white py-3 md:h-[58px] md:py-0 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex-shrink-0">
-          Search
+        <button 
+          onClick={handleSearch}
+          disabled={loading}
+          className="w-full md:w-64 bg-blue-600 text-white py-3 md:h-[58px] md:py-0 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex-shrink-0 disabled:opacity-50"
+        >
+          {loading ? 'Searching...' : 'Search'}
         </button>
       </div>
 
@@ -150,29 +216,72 @@ const SearchSection = () => {
       <div>
         <h3 className="text-lg font-semibold mb-4">Recent Searches</h3>
         <div className="space-y-4">
-          {recentSearches.map((hotel) => (
-            <div key={hotel.id} className="flex gap-3 p-3 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">🏨</span>
-              </div>
-              <div className="flex-1">
-                <h4 className="font-semibold text-sm">{hotel.name}</h4>
-                <div className="flex items-center gap-2 my-1">
-                  <div className="flex items-center">
-                    <span className="text-yellow-500 text-sm">★</span>
-                    <span className="text-sm font-medium ml-1">{hotel.rating}</span>
+          {recentSearches.length > 0 ? (
+            recentSearches.map((hotel) => (
+              <div 
+                key={hotel.id} 
+                className="relative flex items-stretch bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => handleRecentSearchClick(hotel)}
+              >
+                {/* Hotel Image */}
+                <img
+                  src={hotel.image}
+                  alt={hotel.name}
+                  className="w-24 h-20 sm:w-32 sm:h-24 md:w-44 md:h-28 lg:w-56 lg:h-32 object-cover flex-shrink-0"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'block';
+                  }}
+                />
+                <div 
+                  className="w-24 h-20 sm:w-32 sm:h-24 md:w-44 md:h-28 lg:w-56 lg:h-32 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0" 
+                  style={{display: 'none'}}
+                >
+                  <span className="text-lg sm:text-xl md:text-2xl">🏨</span>
+                </div>
+
+                {/* Hotel Details */}
+                <div className="flex-1 p-2 sm:p-3">
+                  <div className="font-semibold text-sm sm:text-base truncate">{hotel.name}</div>
+                  <div className="flex items-center gap-1 text-amber-400 text-xs sm:text-sm">
+                    {"★★★★★".slice(0, Math.floor(hotel.rating))}
+                    <span className="text-gray-400">{"★".repeat(5 - Math.floor(hotel.rating))}</span>
+                    <span className="ml-1 sm:ml-2 text-gray-500 text-xs">{hotel.reviews}</span>
                   </div>
-                  <span className="text-xs text-gray-500">{hotel.reviews}</span>
+
+                  <div className="mt-1 text-xs text-gray-500 hidden sm:block">Amenities</div>
+                  <div className="mt-1 flex gap-1 sm:gap-2">
+                    {["🏠","🏢","📅","👥","•••"].map((icon, index) => (
+                      <span 
+                        key={index} 
+                        className="inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gray-100 shadow-sm text-xs sm:text-sm"
+                      >
+                        {icon}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="mt-1 sm:mt-2 font-semibold text-indigo-600 text-sm sm:text-base">{hotel.price}</div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-green-600 font-semibold text-sm">{hotel.price}</span>
-                  <button className="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700 transition-colors">
-                    Book Now
-                  </button>
-                </div>
+
+                {/* Vertical Book Now Button */}
+                <button
+                  className="w-10 sm:w-12 bg-indigo-600 text-white flex items-center justify-center rounded-r-xl hover:bg-indigo-700 transition-colors"
+                  aria-label="Book Now"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleBookNowClick(hotel);
+                  }}
+                >
+                  <span className="rotate-90 select-none tracking-wide text-xs sm:text-sm whitespace-nowrap transform translate-y-0.5">Book Now</span>
+                </button>
               </div>
+            ))
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              <p>Loading recent searches...</p>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </div>

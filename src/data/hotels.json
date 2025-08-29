@@ -8,8 +8,8 @@
       "reviews": "10K Reviews",
       "price": "1000/night",
       "priceNumeric": 1000,
-      "currency": "USD",
-      "image": "/hotel-1.jpg",
+      "currency": "BAHT",
+      "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Luxury beachfront resort with world-class amenities and stunning ocean views.",
       "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Beach Access"],
       "rooms": {
@@ -31,8 +31,8 @@
       "reviews": "8.5K Reviews",
       "price": "800/night",
       "priceNumeric": 800,
-      "currency": "USD",
-      "image": "/hotel-2.jpg",
+      "currency": "BAHT",
+      "image": "https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80",
       "description": "Historic luxury hotel in the heart of Bangkok with traditional Thai architecture.",
       "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Concierge", "Valet Parking"],
       "rooms": {
@@ -54,8 +54,8 @@
       "reviews": "6.2K Reviews", 
       "price": "650/night",
       "priceNumeric": 650,
-      "currency": "USD",
-      "image": "/hotel-3.jpg",
+      "currency": "BAHT",
+      "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80",
       "description": "Tropical paradise resort with private beach and award-winning spa facilities.",
       "amenities": ["Private Beach", "Spa", "WiFi", "Multiple Restaurants", "Water Sports"],
       "rooms": {
@@ -77,8 +77,8 @@
       "reviews": "3.8K Reviews",
       "price": "450/night", 
       "priceNumeric": 450,
-      "currency": "USD",
-      "image": "/hotel-4.jpg",
+      "currency": "BAHT",
+      "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Modern boutique hotel blending contemporary design with local cultural elements.",
       "amenities": ["WiFi", "Restaurant", "Rooftop Bar", "Gym", "Business Center"],
       "rooms": {
@@ -100,8 +100,8 @@
       "reviews": "2.1K Reviews",
       "price": "280/night",
       "priceNumeric": 280,
-      "currency": "USD", 
-      "image": "/hotel-5.jpg",
+      "currency": "BAHT", 
+      "image": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Peaceful mountain retreat offering stunning valley views and nature activities.",
       "amenities": ["Mountain View", "Restaurant", "Hiking Trails", "WiFi", "Garden"],
       "rooms": {
@@ -123,8 +123,8 @@
       "reviews": "5.5K Reviews",
       "price": "720/night",
       "priceNumeric": 720,
-      "currency": "USD",
-      "image": "/hotel-6.jpg", 
+      "currency": "BAHT",
+      "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80", 
       "description": "Historic riverside resort near ancient temples with traditional Thai hospitality.",
       "amenities": ["River View", "Spa", "Temple Tours", "Restaurant", "WiFi", "Pool"],
       "rooms": {
@@ -146,8 +146,8 @@
       "reviews": "7.3K Reviews",
       "price": "590/night",
       "priceNumeric": 590,
-      "currency": "USD",
-      "image": "/hotel-7.jpg",
+      "currency": "BAHT",
+      "image": "https://images.unsplash.com/photo-1549294413-26f195200c16?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1464&q=80",
       "description": "Tropical beachfront resort with crystal clear waters and white sandy beaches.",
       "amenities": ["Private Beach", "Water Sports", "Spa", "Multiple Pools", "WiFi"],
       "rooms": {
@@ -169,8 +169,8 @@
       "reviews": "4.2K Reviews", 
       "price": "320/night",
       "priceNumeric": 320,
-      "currency": "USD",
-      "image": "/hotel-8.jpg",
+      "currency": "BAHT",
+      "image": "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Modern city hotel with easy access to shopping, dining and entertainment.",
       "amenities": ["WiFi", "Restaurant", "Gym", "Business Center", "Parking"],
       "rooms": {
@@ -192,8 +192,8 @@
       "reviews": "1.8K Reviews",
       "price": "380/night",
       "priceNumeric": 380,
-      "currency": "USD",
-      "image": "/hotel-9.jpg",
+      "currency": "BAHT",
+      "image": "https://images.unsplash.com/photo-1587061949409-02df41d5e562?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Sustainable eco-lodge in the heart of Thailand's beautiful national park.",
       "amenities": ["Nature Trails", "Wildlife Tours", "Restaurant", "WiFi", "Organic Garden"],
       "rooms": {
@@ -215,8 +215,8 @@
       "reviews": "9.1K Reviews",
       "price": "680/night",
       "priceNumeric": 680,
-      "currency": "USD",
-      "image": "/hotel-10.jpg",
+      "currency": "BAHT",
+      "image": "https://images.unsplash.com/photo-1561501900-3701fa6a0864?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
       "description": "Modern high-rise hotel with panoramic city views and rooftop infinity pool.",
       "amenities": ["Rooftop Pool", "Sky Bar", "Spa", "WiFi", "Restaurant", "Gym"],
       "rooms": {
@@ -229,6 +229,236 @@
       },
       "category": "modern",
       "featured": true
+    },
+    {
+      "id": 11,
+      "name": "Marina Bay Sands",
+      "location": "Singapore, Singapore",
+      "rating": 4.9,
+      "reviews": "15K Reviews",
+      "price": "350/night",
+      "priceNumeric": 350,
+      "currency": "USD",
+      "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "description": "Iconic luxury hotel with infinity pool, world-class dining, and stunning city views.",
+      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Shopping", "Casino"],
+      "rooms": {
+        "available": 8,
+        "total": 2500
+      },
+      "coordinates": {
+        "lat": 1.2834,
+        "lng": 103.8607
+      },
+      "category": "luxury",
+      "featured": true
+    },
+    {
+      "id": 12,
+      "name": "Park Hyatt Tokyo",
+      "location": "Tokyo, Japan",
+      "rating": 4.8,
+      "reviews": "8.5K Reviews",
+      "price": "400/night",
+      "priceNumeric": 400,
+      "currency": "USD",
+      "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "description": "Elegant hotel in Shinjuku with panoramic city views and sophisticated Japanese hospitality.",
+      "amenities": ["Spa", "WiFi", "Restaurant", "Gym", "Bar", "Concierge"],
+      "rooms": {
+        "available": 12,
+        "total": 178
+      },
+      "coordinates": {
+        "lat": 35.6762,
+        "lng": 139.6503
+      },
+      "category": "luxury",
+      "featured": true
+    },
+    {
+      "id": 13,
+      "name": "Banyan Tree Kuala Lumpur",
+      "location": "Kuala Lumpur, Malaysia",
+      "rating": 4.7,
+      "reviews": "6.2K Reviews",
+      "price": "180/night",
+      "priceNumeric": 180,
+      "currency": "USD",
+      "image": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "description": "Urban sanctuary with stunning Petronas Towers views and luxurious spa facilities.",
+      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Bar"],
+      "rooms": {
+        "available": 20,
+        "total": 55
+      },
+      "coordinates": {
+        "lat": 3.1390,
+        "lng": 101.6869
+      },
+      "category": "luxury",
+      "featured": false
+    },
+    {
+      "id": 14,
+      "name": "The Oberoi Mumbai",
+      "location": "Mumbai, India",
+      "rating": 4.6,
+      "reviews": "9.1K Reviews",
+      "price": "220/night",
+      "priceNumeric": 220,
+      "currency": "USD",
+      "image": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "description": "Contemporary luxury hotel overlooking the Arabian Sea with exceptional dining.",
+      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Business Center"],
+      "rooms": {
+        "available": 18,
+        "total": 287
+      },
+      "coordinates": {
+        "lat": 19.0760,
+        "lng": 72.8777
+      },
+      "category": "luxury",
+      "featured": false
+    },
+    {
+      "id": 15,
+      "name": "Four Seasons Seoul",
+      "location": "Seoul, South Korea",
+      "rating": 4.8,
+      "reviews": "7.3K Reviews",
+      "price": "320/night",
+      "priceNumeric": 320,
+      "currency": "USD",
+      "image": "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1469&q=80",
+      "description": "Modern luxury in Gangnam district with traditional Korean elements and city views.",
+      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Bar"],
+      "rooms": {
+        "available": 14,
+        "total": 317
+      },
+      "coordinates": {
+        "lat": 37.5665,
+        "lng": 126.9780
+      },
+      "category": "luxury",
+      "featured": true
+    },
+    {
+      "id": 16,
+      "name": "COMO The Treasury",
+      "location": "Perth, Australia",
+      "rating": 4.5,
+      "reviews": "4.8K Reviews",
+      "price": "280/night",
+      "priceNumeric": 280,
+      "currency": "USD",
+      "image": "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "description": "Stylish hotel in a heritage building in the heart of Perth's CBD.",
+      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Bar"],
+      "rooms": {
+        "available": 22,
+        "total": 48
+      },
+      "coordinates": {
+        "lat": -31.9505,
+        "lng": 115.8605
+      },
+      "category": "boutique",
+      "featured": false
+    },
+    {
+      "id": 17,
+      "name": "Shangri-La Paris",
+      "location": "Paris, France",
+      "rating": 4.9,
+      "reviews": "12.4K Reviews",
+      "price": "650/night",
+      "priceNumeric": 650,
+      "currency": "USD",
+      "image": "https://images.unsplash.com/photo-1502602898536-47ad22581b52?ixlib=rb-4.0.3&auto=format&fit=crop&w=1473&q=80",
+      "description": "Palace hotel with Eiffel Tower views, Michelin-starred dining, and French elegance.",
+      "amenities": ["Spa", "WiFi", "Restaurant", "Gym", "Bar", "Concierge"],
+      "rooms": {
+        "available": 6,
+        "total": 101
+      },
+      "coordinates": {
+        "lat": 48.8566,
+        "lng": 2.3522
+      },
+      "category": "luxury",
+      "featured": true
+    },
+    {
+      "id": 18,
+      "name": "The Savoy London",
+      "location": "London, United Kingdom",
+      "rating": 4.7,
+      "reviews": "18.9K Reviews",
+      "price": "450/night",
+      "priceNumeric": 450,
+      "currency": "USD",
+      "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "description": "Legendary luxury hotel on the Strand with timeless British hospitality.",
+      "amenities": ["Spa", "WiFi", "Restaurant", "Gym", "Bar", "Theater"],
+      "rooms": {
+        "available": 10,
+        "total": 267
+      },
+      "coordinates": {
+        "lat": 51.5074,
+        "lng": -0.1278
+      },
+      "category": "heritage",
+      "featured": false
+    },
+    {
+      "id": 19,
+      "name": "The Plaza New York",
+      "location": "New York, USA",
+      "rating": 4.6,
+      "reviews": "22.1K Reviews",
+      "price": "500/night",
+      "priceNumeric": 500,
+      "currency": "USD",
+      "image": "https://images.unsplash.com/photo-1496417263034-38ec4f0b665a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80",
+      "description": "Iconic luxury hotel overlooking Central Park with timeless New York glamour.",
+      "amenities": ["Spa", "WiFi", "Restaurant", "Gym", "Shopping", "Concierge"],
+      "rooms": {
+        "available": 8,
+        "total": 282
+      },
+      "coordinates": {
+        "lat": 40.7589,
+        "lng": -73.9741
+      },
+      "category": "luxury",
+      "featured": true
+    },
+    {
+      "id": 20,
+      "name": "Fairmont Banff Springs",
+      "location": "Banff, Canada",
+      "rating": 4.4,
+      "reviews": "11.7K Reviews",
+      "price": "300/night",
+      "priceNumeric": 300,
+      "currency": "USD",
+      "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80",
+      "description": "Castle in the Rockies with breathtaking mountain views and outdoor adventures.",
+      "amenities": ["Pool", "Spa", "WiFi", "Restaurant", "Gym", "Golf"],
+      "rooms": {
+        "available": 25,
+        "total": 764
+      },
+      "coordinates": {
+        "lat": 51.1784,
+        "lng": -115.5708
+      },
+      "category": "resort",
+      "featured": false
     }
   ],
   "filters": {
@@ -266,13 +496,23 @@
       {"id": "pai", "name": "Pai", "count": 1},
       {"id": "ayutthaya", "name": "Ayutthaya", "count": 1},
       {"id": "koh-samui", "name": "Koh Samui", "count": 1},
-      {"id": "khao-yai", "name": "Khao Yai", "count": 1}
+      {"id": "khao-yai", "name": "Khao Yai", "count": 1},
+      {"id": "singapore", "name": "Singapore", "count": 1},
+      {"id": "tokyo", "name": "Tokyo", "count": 1},
+      {"id": "kuala-lumpur", "name": "Kuala Lumpur", "count": 1},
+      {"id": "mumbai", "name": "Mumbai", "count": 1},
+      {"id": "seoul", "name": "Seoul", "count": 1},
+      {"id": "perth", "name": "Perth", "count": 1},
+      {"id": "paris", "name": "Paris", "count": 1},
+      {"id": "london", "name": "London", "count": 1},
+      {"id": "new-york", "name": "New York", "count": 1},
+      {"id": "banff", "name": "Banff", "count": 1}
     ]
   },
   "metadata": {
-    "totalHotels": 10,
+    "totalHotels": 20,
     "lastUpdated": "2024-01-15T10:30:00Z",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "currency": "USD"
   }
 }
